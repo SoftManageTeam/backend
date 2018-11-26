@@ -44,7 +44,7 @@ public class orderfood {
 	}
 	public void setOrderfoodpri(float orderfoodpri) {
 		this.orderfoodpri = orderfoodpri;
-	}
+	} 
 
 	
 }
