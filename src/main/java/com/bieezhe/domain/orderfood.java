@@ -43,7 +43,7 @@ public class orderfood {
 		return orderfoodpri;
 	}
 	public void setOrderfoodpri(float orderfoodpri) {
-		this.orderfoodpri = orderfoodpri;
+		this.orderfoodpri = orderfoodpri; 
 	}    
  
 	
