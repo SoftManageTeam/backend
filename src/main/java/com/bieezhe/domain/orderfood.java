@@ -45,12 +45,6 @@ public class orderfood {
 	public void setOrderfoodpri(float orderfoodpri) {
 		this.orderfoodpri = orderfoodpri;
 	}
-	public int getOrderstate() {
-		return orderstate;
-	}
-	public void setOrderstate(int orderstate) {
-		this.orderstate = orderstate;
-	}
-	
+
 	
 }
