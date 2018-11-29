@@ -74,7 +74,7 @@ public class indexController {
 		
 		return foods;
 	}
-	
+	 
 	/**
 	 * 接受订单信息
 	 * @param odo
