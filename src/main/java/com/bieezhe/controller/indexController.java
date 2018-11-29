@@ -31,7 +31,7 @@ public class indexController {
 	@Autowired
 	private foodRepository foodRepository;
 	
-	@Autowired
+	@Autowired 
 	private IndexService indexService;
 	
 	@Autowired
@@ -71,7 +71,6 @@ public class indexController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return foods;
 	}
 	 
