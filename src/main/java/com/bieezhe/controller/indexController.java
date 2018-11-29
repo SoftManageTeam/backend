@@ -79,7 +79,7 @@ public class indexController {
 	 * 接受订单信息
 	 * @param odo
 	 * @return
-	 */  
+	 */   
 	@PostMapping(value="/index/sellerid/order")
 	public Object addOrder(orderinfo odo){
 		return orderinfoRespository.save(odo);
