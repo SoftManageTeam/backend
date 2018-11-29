@@ -82,7 +82,7 @@ public class indexController {
 	 */   
 	@PostMapping(value="/index/sellerid/order")
 	public Object addOrder(orderinfo odo){
-		return orderinfoRespository.save(odo);
+		return orderinfoRespository.save(odo); 
 	}
 	
 	
