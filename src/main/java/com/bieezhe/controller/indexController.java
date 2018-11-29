@@ -29,7 +29,7 @@ public class indexController {
 	private customerRepository customerRepository;
 	
 	@Autowired
-	private foodRepository foodRepository;
+	private foodRepository foodRepository; 
 	
 	@Autowired 
 	private IndexService indexService;
