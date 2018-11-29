@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bieezhe.domain.customer;
 import com.bieezhe.domain.food;
+import com.bieezhe.domain.orderinfo;
 import com.bieezhe.domain.seller;
 import com.bieezhe.repository.customerRepository;
 import com.bieezhe.repository.foodRepository;
+import com.bieezhe.repository.orderinfoRepository;
 import com.bieezhe.repository.sellerRepository;
 import com.bieezhe.service.IndexService;
 
@@ -31,6 +33,9 @@ public class indexController {
 	
 	@Autowired
 	private IndexService indexService;
+	
+	@Autowired
+	private orderinfoRepository orderinfoRespository;
 	
 	/**
 	 * 返回所有商家
@@ -68,6 +73,16 @@ public class indexController {
 		}
 		
 		return foods;
+	}
+	
+	/**
+	 * 接受订单信息
+	 * @param odo
+	 * @return
+	 */
+	@PostMapping(value="/index/sellerid/order")
+	public Object addOrder(orderinfo odo){
+		return orderinfoRespository.save(odo);
 	}
 	
 	
