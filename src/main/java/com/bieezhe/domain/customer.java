@@ -9,12 +9,11 @@ public class customer {
 
 	@Id
 	@GeneratedValue
-	private Integer custid;
+	private Integer custid=-1;//默认值,应对添加用户是要检查custid值，实际值不是-1
 	private String custname;
-	private String custnickname;
 	private String custpassword;
-	private float custbalance;
-	private String custtel;
+	private float custbalance=200;
+	private String custtel="0";
 	public int getCustid() {
 		return custid;
 	}
@@ -26,12 +25,6 @@ public class customer {
 	}
 	public void setCustname(String custname) {
 		this.custname = custname;
-	}
-	public String getCustnickname() {
-		return custnickname;
-	}
-	public void setCustnickname(String custnickname) {
-		this.custnickname = custnickname;
 	}
 	public String getCustpassword() {
 		return custpassword;

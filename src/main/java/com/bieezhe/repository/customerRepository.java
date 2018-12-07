@@ -6,5 +6,9 @@ import com.bieezhe.domain.customer;
 
 public interface customerRepository extends JpaRepository<customer, Integer> {
 
+	customer findByCustname(String name);
+
+	boolean existsByCustname(String name);
+
 }
 

@@ -1,25 +1,33 @@
 package com.bieezhe.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bieezhe.domain.customer;
 import com.bieezhe.domain.food;
-import com.bieezhe.domain.orderinfo;
+import com.bieezhe.domain.orders;
 import com.bieezhe.domain.seller;
 import com.bieezhe.repository.customerRepository;
 import com.bieezhe.repository.foodRepository;
-import com.bieezhe.repository.orderinfoRepository;
+import com.bieezhe.repository.ordersRepository;
+import com.bieezhe.repository.orderdetailRepository;
 import com.bieezhe.repository.sellerRepository;
 import com.bieezhe.service.IndexService;
 
-@RestController
+@Controller
 public class indexController {
 
 	@Autowired
@@ -35,13 +43,128 @@ public class indexController {
 	private IndexService indexService;
 	
 	@Autowired
-	private orderinfoRepository orderinfoRespository;
+	private orderdetailRepository orderdetailRespository;
+	
+	@Autowired
+	private ordersRepository ordersRespository;
+	
+	
+	/**
+	 * index跳转到index.html
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping("/index.html")
+    public String helloHtml(HashMap<String, Object> map) {
+        //map.put("hello", "欢迎进入HTML页面");
+        return "/index.html";
+    }
+	
+	/**
+	 * foodlist.html跳转到/foodlist.html
+	 * @return
+	 */
+	@GetMapping("/foodlist.html")
+	public String foodlistHtml()
+	{
+		return "/foodlist.html";
+	}
+	
+	/**
+	 * login.html请求跳转到/login.html
+	 * @return
+	 */
+	@GetMapping("/login.html")
+	public String loginHtml()
+	{
+		return "/login.html";
+	}
+	
+	/**
+	 * register.html请求跳转到register.html
+	 * @return
+	 */
+	@GetMapping("/register.html")
+	public String registerHtml()
+	{
+		return "/register.html";
+	}
+	
+	/**
+	 * shop.html请求跳转到shop.html
+	 * @return
+	 */
+	@GetMapping("/shop.html")
+	public String shopHtml()
+	{
+		return "/shop.html";
+	}
+	
+	/**
+	 * order.html请求跳转到order.html
+	 * @return
+	 */
+	@GetMapping("/order.html")
+	public String orderHtml()
+	{
+		return "/order.html";
+	}
+	
+	/**
+	 * 用户登录
+	 * @param name
+	 * @param password
+	 * @return
+	 */
+	@PostMapping("/getuser")
+	@ResponseBody
+	public int getuser(@RequestParam  Map<String, Object> params)
+	{
+		System.out.println(params);
+		JSONObject data = (JSONObject) JSONObject.parse((String) params.get("data"));
+	    String name = data.getString("name");
+	    String password = data.getString("password");
+		int statusCode = indexService.login(name,password);
+		return statusCode;
+	}
+	
+	/**
+	 * 用户注册
+	 * 注意：requestmapping,默认为get请求，若为post请求的话，必须注明！！
+	 * @param params
+	 * @return
+	 */
+	@RequestMapping(value="/postuser", method = RequestMethod.POST)
+	@ResponseBody
+	public int postuser(@RequestParam  Map<String, Object> params)
+	{
+	    //访问json数据
+	    JSONObject user = (JSONObject) JSONObject.parse((String) params.get("user"));
+	    int statusCode = indexService.addCustomer(user);
+		return statusCode;
+	}
+	
+	/**
+	 * 发起订单，返回请求结果
+	 * @param params
+	 * @return
+	 */
+	@RequestMapping(value="/postorder", method = RequestMethod.POST)
+	@ResponseBody
+	public int postorder(@RequestParam  Map<String, Object> params){
+		JSONObject order = (JSONObject) JSONObject.parse((String) params.get("order"));
+	    //System.out.println(username+address+phone+food+totalPrice);
+	    int statusCode = indexService.addOrder(order);
+		
+		return statusCode;
+	}
+	
 	
 	/**
 	 * 返回所有商家
 	 * @return
 	 */
-	@GetMapping(value="/index")
+	@GetMapping(value="/index/index")
 	public List<seller> getShops(){
 		return sellerRepository.findAll();
 	}
@@ -52,6 +175,7 @@ public class indexController {
 	 * @return
 	 */
 	@PostMapping(value="/login/signup")
+	@ResponseBody
 	public Object addCustomer(customer cus){
 		return customerRepository.save(cus);
 	}
@@ -62,6 +186,7 @@ public class indexController {
 	 * @return
 	 */
 	@GetMapping(value="/index/sellerid/{sellerid}")
+	@ResponseBody
 	public ArrayList<food> showFoodsById(@PathVariable("sellerid") int sellerid) throws Exception
 	{
 		ArrayList<food> foods=null;
@@ -74,14 +199,25 @@ public class indexController {
 		return foods;
 	}
 	 
+	
 	/**
-	 * 接受订单信息
-	 * @param odo
+	 * 通过顾客id返回顾客订单情况
+	 * @param customerid
 	 * @return
-	 */   
-	@PostMapping(value="/index/sellerid/order")
-	public Object addOrder(orderinfo odo){
-		return orderinfoRespository.save(odo); 
+	 * @throws Exception
+	 */
+	@GetMapping(value="/index/records/{custname}")
+	@ResponseBody
+	public ArrayList<orders> showOrdersById(@PathVariable("custname") String custname) throws Exception
+	{
+		ArrayList<orders> orders=null;
+		try {
+			orders=ordersRespository.findAllByCustname(custname);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return orders;
 	}
 	
 	

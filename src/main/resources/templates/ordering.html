@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>预定中列表</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+<!-- Mobile Devices Support @begin -->
+<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
+<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+<meta content="no-cache" http-equiv="pragma">
+<meta content="0" http-equiv="expires">
+<meta content="telephone=no, address=no" name="format-detection">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<!-- apple devices fullscreen -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<!-- Mobile Devices Support @end -->
+<link rel="stylesheet" type="text/css" href="FortAwesome/docs/assets/css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="style.css" />
+<script src="js/jquery.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script type="text/javascript" src="js/swipe.js"></script>
+<script src="js/jquery.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script type="text/javascript">
+   var _global = {};
+	   _global.spm = {};
+
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {WeixinJSBridge.call('hideToolbar');});
+</script>
+<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+</head>
+
+<body>
+<div class="body">
+<h3 class="fn-tit"><a href="javascript:history.go(-1);" class="nback">返回</a><b class="tit">预定中</b></h3>
+  <div class="jf-body">
+  	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <th scope="col" align="left" width="56%">餐品名</th>
+    <th scope="col" align="right" width="36%">时间</th>
+  </tr>
+  <tr>
+    <td align="left">惠心上品斑鱼火锅</td>
+    <td align="right">2014-03-25</td>
+  </tr>
+  <tr>
+    <td align="left">惠心上品斑鱼火锅</td>
+    <td align="right">2014-03-25</td>
+  </tr>
+  <tr>
+    <td align="left">惠心上品斑鱼火锅</td>
+    <td align="right">2014-03-25</td>
+  </tr>
+  <tr>
+    <td align="left">惠心上品斑鱼火锅</td>
+    <td align="right">2014-03-25</td>
+  </tr>
+  <tr>
+    <td align="left">惠心上品斑鱼火锅</td>
+    <td align="right">2014-03-25</td>
+  </tr>
+  <tr>
+    <td align="left">惠心上品斑鱼火锅</td>
+    <td align="right">2014-03-25</td>
+  </tr>  
+</table>
+  </div>
+  <!--下导航-->
+  <div class="js-navmenu nav-on-bottom style-2">
+    <div class="nav-menu has-menu-3"> <a href="/index.html" class="icon-home"></a>
+      <div class="divide">&nbsp;</div>
+      <div class="one"> <a class="mainmenu js-mainmenu" href="javascript:void(0);"> <i class="arrow-weixin"></i> 菜品 </a>
+        <div class="submenu js-submenu"> <span class="arrow before-arrow"></span> <span class="arrow after-arrow"></span>
+          <ul>
+            <li> <a href="foodlist.html"> 火锅 </a> </li>
+            <li> <a href="foodlist.html"> 地方菜 </a> </li>
+            <li> <a href="foodlist.html"> 西餐 </a> </li>
+            <li> <a href="foodlist.html"> 快餐 </a> </li>
+          </ul>
+        </div>
+      </div>
+      <div class="divide">&nbsp;</div>
+      <div class="one"> <a class="mainmenu js-mainmenu" href="javascript:void(0);"> <i class="arrow-weixin"></i> 会员 </a>
+        <div class="submenu js-submenu"> <span class="arrow before-arrow"></span> <span class="arrow after-arrow"></span>
+          <ul>
+            <li> <a href="foodlist.html"> 我要订位 </a> </li>
+            <li> <a href="membercenter.html"> 会员中心 </a> </li>
+          </ul>
+        </div>
+      </div>
+      <div class="divide">&nbsp;</div>
+      <div class="one"> <a class="mainmenu js-mainmenu" href="javascript:void(0);"> <i class="arrow-weixin"></i> VIP </a>
+        <div class="submenu js-submenu"> <span class="arrow before-arrow"></span> <span class="arrow after-arrow"></span>
+          <ul>
+            <li> <a href="register.html"> 我要成为VIP </a> </li>
+            <li> <a href="score.html"> 积分兑换 </a> </li>
+          </ul>
+        </div>
+      </div>
+      <div class="divide">&nbsp;</div>
+      <div class="one"> <a class="mainmenu js-mainmenu" href="javascript:void(0);"> <i class="arrow-weixin"></i> 订单 </a>
+        <div class="submenu js-submenu"> <span class="arrow before-arrow"></span> <span class="arrow after-arrow"></span>
+          <ul>
+            <li> <a href="order.html"> 我的订单 </a> </li>
+          </ul>
+        </div>
+        <!--submenu js-submenu--> 
+      </div>
+      <!--one--> 
+    </div>
+  </div>
+  <!--nav-on-bottom下导航结束-->
+</div>
+<!--body--> 
+
+<script type="text/javascript" src="js/wap.min.js"></script>
+<script>
+var user_id = sessionStorage.getItem("user_id");
+$.ajax(
+					{
+						type:"post",
+						dataType:"json",
+						url:"getallorder",
+						data:{"user_id":JSON.stringify(user_id)},
+		                success:function(result){
+		                	//alert(result);
+							iG.items = result;
+							init();//ajax成功后执行init();
+		                }
+					}
+			)
+function init(){
+            setMenu(iG.items);
+			$("#J_list_Container").html(listManger(iG.items));
+            $("#loadingView").addClass("hide");
+        }
+        
+        function setMenu(_list){
+            iG.menu = [];
+            iG.indexMenu = (function(){
+                var menu;
+                var count = 0;
+                for(var i in _list){
+                    if(count===0){
+                        menu =  i;
+                    }
+                    count++;
+                    iG.menu.push(i);
+                }
+                return menu;
+            })();
+            buildMenu(iG.menu);
+        }
+        
+        function buildMenu(_list){
+            var menuHtml = "<dl>";
+            var active;
+            for(var i in _list){
+                active = "";
+                if(_list[i]===iG.indexMenu)active = "active";
+                menuHtml += "<dd class=\""+active+"\"><a data_name=\""+ _list[i] +"\">"+ _list[i] +"</a></dd>"
+            
+            }
+			menuHtml += "</dl>";
+            $("#J_menuList").html(menuHtml);
+        }
+        
+		function getIndex(_id){
+            var indexList = iG.items[iG.indexMenu];
+			for(var i in indexList){
+				if(indexList[i].id===_id){
+					return indexList[i]
+				}
+			}
+		}
+		function submit(){
+			var data = iG.order;
+			var result = [];
+			for(var i in data){
+				result.push({id:iG.order[i].id,counter:iG.order[i].counter});
+			}
+			return JSON.stringify(result);
+		}
+		
+		function countPrice(){
+			var price = 0;
+			for(var i in iG.order){
+				price += Number(iG.order[i].price)*iG.order[i].counter;
+			}
+			return price;
+		}
+		function listManger(_list){
+			var result = "";
+			var listArr = [];
+            var indexList = _list[iG.indexMenu];
+			for(var i in indexList){
+				listArr.push(indexList[i]);
+				if(Math.floor(i/3)===0&&i>2){
+					result += buildList(listArr);
+					listArr = [];
+				}
+			}
+			result += "<div class=\"row\">";
+			result += buildList(listArr);
+			result += "</div>";
+			return result;
+		}
+		function buildList(_list){
+			var result = "";
+			for(var i in _list){
+				result += "<li><h3 class=\"tit\"><a href=\"foodcontent.html\">"+_list[i].name+"</a></h3><div class=\"foodintro clearfix\"><a class=\"foodimg floatl\"><img src=\""+_list[i].imageUrl+"\"></a><div class=\"foodcon floatl\"><p>单价<b>"+_list[i].price+"</b></p><p class=\"fts orange\">VIP：￥0.1</p><p>店铺：<b>"+_list[i].f_name+"</b></p><p class=\"btn fts clearfix\"><a class=\"floatl orange-btn\" onclick=\"shop("+i+")\">点菜</a><i class=\"icon-ok floatl dci\"></i></p></div></div><p class=\"fcomment clearfix\"> <span class=\"floatl\"><a href=\"#\"><i class=\"icon-thumbs-up\"></i>赞<em>215</em></a></span> <span class=\"floatl\"><a href=\"#\"><i class=\"icon-comment\"></i>评论<em>15</em></a></span><span class=\"floatl\" style=\"border-right:0; border-right:none;\"><a href=\"#\"><i class=\"icon-share-alt\"></i>转发</a></span></p><em class=\"lt ltgreen\">新品<br>上市</em></li>"}
+			return result;
+		}
+		function buildOrder(_list){
+			var result = " ";
+			var check = true;
+			
+			for(var i in _list){
+				if(_list[i].counter === 0)continue;
+				check = false;
+				result += " ";
+				
+				
+			}
+			if(check){
+				result += " ";
+			}
+			return result;
+		}
+</script>
+</body>
+</html>

@@ -10,7 +10,6 @@ public class food {
 	@Id
 	@GeneratedValue
 	private int foodid;
-	
 	private int sellerid;
 	private String foodname;
 	private float foodprice;

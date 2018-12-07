@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>会员登录</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
+	name="viewport">
+<!-- Mobile Devices Support @begin -->
+<meta content="application/xhtml+xml;charset=UTF-8"
+	http-equiv="Content-Type">
+<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
+<meta content="no-cache" http-equiv="pragma">
+<meta content="0" http-equiv="expires">
+<meta content="telephone=no, address=no" name="format-detection">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<!-- apple devices fullscreen -->
+<meta name="apple-mobile-web-app-status-bar-style"
+	content="black-translucent" />
+<!-- Mobile Devices Support @end -->
+<link rel="stylesheet" type="text/css" href="css/font-awesome2.css">
+<link rel="stylesheet" type="text/css" href="style.css" />
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="js/swipe.js"></script>
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+   var _global = {};
+	   _global.spm = {};
+
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {WeixinJSBridge.call('hideToolbar');});
+var user_state =sessionStorage.getItem("user_state");
+sessionStorage.setItem("user_name", "用户a");
+sessionStorage.setItem("user_id", "01");
+if(user_state){
+	alert("已登录");
+	window.location.href="index.html";
+}else{alert("未登录");}
+
+function login(){
+var name = $('input[name="name"]').val();
+var paws = $('input[name="password"]').val();
+var data = {"name":name,"password":paws}
+alert(JSON.stringify(data));
+$.ajax(
+					{
+						type:"post",
+						dataType:"json",
+						url:"getuser",
+						data:{"data":JSON.stringify(data)},
+		                success:function(stateCode){
+							//var result = JSON.stringify(result);
+							//var state = result.state;
+							if(stateCode==100){
+								alert("登录成功");
+								sessionStorage.setItem("user_state",true);
+								sessionStorage.setItem("user_id", result.id);
+								sessionStorage.setItem("user_name", result.name);
+								}	
+							if(stateCode==101){
+								alert("登录失败");
+								sessionStorage.setItem("user_state",true);
+								sessionStorage.setItem("user_id", result.id);
+								sessionStorage.setItem("user_name", result.name);
+								}	
+							if(stateCode==102){
+								alert("用户不存在");
+								sessionStorage.setItem("user_state",true);
+								sessionStorage.setItem("user_id", result.id);
+								sessionStorage.setItem("user_name", result.name);
+								}
+		                }
+					}
+				)
+				}
+</script>
+<script type="text/javascript">
+   var _global = {};
+	   _global.spm = {};
+	   
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {WeixinJSBridge.call('hideToolbar');});
+</script>
+<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){	
+$(".dci").click( function () { 
+$(this).toggleClass("selected");
+ }); 
+});
+</script>
+</head>
+
+<body>
+	<div class="body login-bg">
+		<p class="login-logo">
+			<img src="images/logo.png" alt="logo">
+		</p>
+		<h2 class="login-tit">会员登录</h2>
+		<div class="login-div">
+			<form>
+				<p class="clearfix">
+					<span class="floatl">帐号：</span><em class="floatr"> <input
+						type="text" class="ltxt floatl" name="name">
+					</em>
+				</p>
+				<p class="clearfix">
+					<span class="floatl">密码：</span><em class="floatr"> <input
+						type="password" class="ltxt floatl" name="password">
+					</em>
+				</p>
+				<p class="clearfix lbtn">
+					<input type="button" class="orange-btn floatl lbtn-dl" value="登录"
+						onclick="login()"> <a href="register.html"
+						class="floatr red-btn">注册</a>
+				</p>
+			</form>
+		</div>
+
+		<!--下导航-->
+		<div class="js-navmenu nav-on-bottom style-2">
+			<div class="nav-menu has-menu-3">
+				<a href="index.html" class="icon-home"></a>
+				<div class="divide">&nbsp;</div>
+				<div class="one">
+					<a class="mainmenu js-mainmenu" href="javascript:void(0);"> <i
+						class="arrow-weixin"></i> 菜品
+					</a>
+					<div class="submenu js-submenu">
+						<span class="arrow before-arrow"></span> <span
+							class="arrow after-arrow"></span>
+						<ul>
+							<li><a href="foodlist.html"> 火锅 </a></li>
+							<li><a href="foodlist.html"> 地方菜 </a></li>
+							<li><a href="foodlist.html"> 西餐 </a></li>
+							<li><a href="foodlist.html"> 快餐 </a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="divide">&nbsp;</div>
+				<div class="one">
+					<a class="mainmenu js-mainmenu" href="javascript:void(0);"> <i
+						class="arrow-weixin"></i> 会员
+					</a>
+					<div class="submenu js-submenu">
+						<span class="arrow before-arrow"></span> <span
+							class="arrow after-arrow"></span>
+						<ul>
+							<li><a href="foodlist.html"> 我要会员 </a></li>
+							<li><a href="membercenter.html"> 会员中心 </a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="divide">&nbsp;</div>
+				<div class="one">
+					<a class="mainmenu js-mainmenu" href="javascript:void(0);"> <i
+						class="arrow-weixin"></i> VIP
+					</a>
+					<div class="submenu js-submenu">
+						<span class="arrow before-arrow"></span> <span
+							class="arrow after-arrow"></span>
+						<ul>
+							<li><a href="register.html"> 我要成为VIP </a></li>
+							<li><a href="score.html"> 积分兑换 </a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="divide">&nbsp;</div>
+				<div class="one">
+					<a class="mainmenu js-mainmenu" href="javascript:void(0);"> <i
+						class="arrow-weixin"></i> 订单
+					</a>
+					<div class="submenu js-submenu">
+						<span class="arrow before-arrow"></span> <span
+							class="arrow after-arrow"></span>
+						<ul>
+							<li><a href="order.html"> 会员订单 </a></li>
+						</ul>
+					</div>
+					<!--submenu js-submenu-->
+				</div>
+				<!--one-->
+			</div>
+		</div>
+
+		<!--nav-on-bottom下导航结束-->
+	</div>
+	<!--body-->
+	<script type="text/javascript" src="js/wap.min.js"></script>
+</body>
+</html>
