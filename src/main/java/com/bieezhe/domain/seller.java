@@ -16,6 +16,8 @@ public class seller {
 	private String selleraddr;
 	private String sellerpicturedir;
 	private String selllerinfo;
+	private float longitude;
+	private float latitude;
 	
 	public seller(){
 		
@@ -56,6 +58,22 @@ public class seller {
 	}
 	public void setSelllerinfo(String selllerinfo) {
 		this.selllerinfo = selllerinfo;
+	}
+
+	public float getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(float longitude) {
+		this.longitude = longitude;
+	}
+
+	public float getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(float latitude) {
+		this.latitude = latitude;
 	}
 	
 	

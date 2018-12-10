@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.bieezhe.domain.customer;
 import com.bieezhe.domain.food;
+import com.bieezhe.domain.orderdetail;
 import com.bieezhe.domain.orders;
 import com.bieezhe.domain.seller;
 import com.bieezhe.repository.customerRepository;
@@ -111,6 +112,16 @@ public class indexController {
 	}
 	
 	/**
+	 * ordering.html请求跳转到ordering.html
+	 * @return
+	 */
+	@GetMapping("/ordering.html")
+	public String ordeingrHtml()
+	{
+		return "/ordering.html";
+	}
+	
+	/**
 	 * 用户登录
 	 * @param name
 	 * @param password
@@ -151,12 +162,12 @@ public class indexController {
 	 */
 	@RequestMapping(value="/postorder", method = RequestMethod.POST)
 	@ResponseBody
-	public int postorder(@RequestParam  Map<String, Object> params){
+	public JSONObject postorder(@RequestParam  Map<String, Object> params){
 		JSONObject order = (JSONObject) JSONObject.parse((String) params.get("order"));
 	    //System.out.println(username+address+phone+food+totalPrice);
-	    int statusCode = indexService.addOrder(order);
+	    JSONObject data = indexService.addOrder(order);
 		
-		return statusCode;
+		return data;
 	}
 	
 	
@@ -206,13 +217,16 @@ public class indexController {
 	 * @return
 	 * @throws Exception
 	 */
-	@GetMapping(value="/index/records/{custname}")
+	@PostMapping(value="/getorder")
 	@ResponseBody
-	public ArrayList<orders> showOrdersById(@PathVariable("custname") String custname) throws Exception
+	public ArrayList<orders> showOrdersById(@RequestParam  Map<String, Object> params) throws Exception
 	{
 		ArrayList<orders> orders=null;
+		JSONObject data = (JSONObject) JSONObject.parse((String) params.get("data"));
+		String Custname = data.getString("Custname");
 		try {
-			orders=ordersRespository.findAllByCustname(custname);
+			orders=ordersRespository.findAllByCustname(Custname);
+			System.out.println(orders);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -221,6 +235,28 @@ public class indexController {
 	}
 	
 	
+	/**
+	 * 通过订单id返回订单详细情况
+	 * @param customerid
+	 * @return
+	 * @throws Exception
+	 */
+	@PostMapping(value="/getorderdetail")
+	@ResponseBody
+	public orderdetail showDetailorderById(@RequestParam  Map<String, Object> params) throws Exception
+	{
+		orderdetail orderdetail=null;
+		JSONObject data = (JSONObject) JSONObject.parse((String) params.get("data"));
+		int orderid = Integer.parseInt(data.getString("orderid"));
+		System.out.println(orderid);
+		try {
+			orderdetail=orderdetailRespository.findAllByOrderid(orderid);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return orderdetail;
+	}
 	/*
 	@GetMapping(value="")
 	public List<seller> getShops(@RequestParam("position") String position){

@@ -76,7 +76,7 @@ public class IndexService {
 		}
 	}
 
-	public int addOrder(JSONObject order) {
+	public JSONObject addOrder(JSONObject order) {
 		// TODO Auto-generated method stub
 		String username = order.getString("name");
 	    String address = order.getString("address");
@@ -102,16 +102,28 @@ public class IndexService {
 		    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 		    System.out.println(df.format(date));
 		    orders odr = new orders(username,address,phone,shopName,totalPrice,df.format(date));
-		    System.out.println("444");
+		    
 		    //将订单存入数据库
 		    orders newOdr = ordersRepository.save(odr);
-		    System.out.println("555");
 		    orderdetail orderdetail = new orderdetail(newOdr.getOrderid(),food.toString(),_food.size(),totalPrice,username,df.format(date));
-		    System.out.println("666");
-		    orderdetailRepository.save(orderdetail);
-		    return 200;
+		    
+		    //更新用户余额
+		    customerRepository.setCustbalance(cust.getCustbalance()-totalPrice);
+		    
+		    //将详细订单存入数据库
+		    orderdetail od = orderdetailRepository.save(orderdetail);
+		    
+		    //更新orders中的信息
+		    ordersRepository.setOrderdetailid(od.getOrderdetailid());
+		    JSONObject data = new JSONObject();
+		    data.put("statusCode",200);
+		    data.put("orderid",odr.getOrderid());
+		    return data;
 		}else{
-			return 201;
+			JSONObject data = new JSONObject();
+		    data.put("statusCode",201);
+		    data.put("orderid",-1);
+			return data;
 		}
 	}
 

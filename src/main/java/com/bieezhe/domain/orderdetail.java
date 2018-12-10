@@ -34,6 +34,11 @@ public class orderdetail {
 		custname=string2;
 		time=string3;
 	}
+	
+	public Integer getOrderdetailid(){
+		return orderdetailid;
+	}
+	
 	public Integer getOrderid() {
 		return orderid;
 	}

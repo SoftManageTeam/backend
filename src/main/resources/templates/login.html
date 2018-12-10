@@ -34,8 +34,7 @@
 
 document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {WeixinJSBridge.call('hideToolbar');});
 var user_state =sessionStorage.getItem("user_state");
-sessionStorage.setItem("user_name", "用户a");
-sessionStorage.setItem("user_id", "01");
+
 if(user_state){
 	alert("已登录");
 	window.location.href="index.html";
@@ -58,18 +57,18 @@ $.ajax(
 							if(stateCode==100){
 								alert("登录成功");
 								sessionStorage.setItem("user_state",true);
-								sessionStorage.setItem("user_id", result.id);
-								sessionStorage.setItem("user_name", result.name);
+								sessionStorage.setItem("user_name", name);
+								window.location.href="index.html";
+								
 								}	
 							if(stateCode==101){
 								alert("登录失败");
-								sessionStorage.setItem("user_state",true);
-								sessionStorage.setItem("user_id", result.id);
+								sessionStorage.setItem("user_state",false);
 								sessionStorage.setItem("user_name", result.name);
 								}	
 							if(stateCode==102){
 								alert("用户不存在");
-								sessionStorage.setItem("user_state",true);
+								sessionStorage.setItem("user_state",false);
 								sessionStorage.setItem("user_id", result.id);
 								sessionStorage.setItem("user_name", result.name);
 								}

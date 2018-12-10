@@ -583,12 +583,15 @@ $(this).toggleClass("selected");
 						dataType:"json",
 						url:"postorder",
 						data:{"order":JSON.stringify(order)},
-		                success:function(statusCode){
-		                	if(statusCode==200){
+		                success:function(data){
+		                	if(data.statusCode==200){
 		                		alert("成功下单");
+		                		sessionStorage.setItem("orderid", data.orderid);
+		                		window.location.href="shop.html";
 		                	}
-		                	if(statusCode==201){
+		                	if(data.statusCode==201){
 		                		alert("余额不足！");
+		                		window.location.href="shop.html";
 		                	}
 		                }
 					}

@@ -12,6 +12,8 @@ public class expresser {
 	private Integer exprid;
 	private String exprname;
 	private String exprtel;
+	private float longitude;
+	private float latitude;
 	public Integer getExprid() {
 		return exprid;
 	}
@@ -29,6 +31,18 @@ public class expresser {
 	}
 	public void setExprtel(String exprtel) {
 		this.exprtel = exprtel;
+	}
+	public float getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(float longitude) {
+		this.longitude = longitude;
+	}
+	public float getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(float latitude) {
+		this.latitude = latitude;
 	}
 	
 }

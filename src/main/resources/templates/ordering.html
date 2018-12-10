@@ -18,6 +18,9 @@
 <!-- Mobile Devices Support @end -->
 <link rel="stylesheet" type="text/css" href="FortAwesome/docs/assets/css/font-awesome.css">
 <link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" href="css/bellows.css">
+<link rel="stylesheet" href="css/bellows-theme.css">
+<link rel="stylesheet" href="css/lrtk.css">
 <script src="js/jquery.js"></script> 
 <script src="js/bootstrap.min.js"></script> 
 <script type="text/javascript" src="js/swipe.js"></script>
@@ -32,44 +35,18 @@ document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {Weixi
 <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
 </head>
 
-<body>
+<body onload="load()">
 <div class="body">
-<h3 class="fn-tit"><a href="javascript:history.go(-1);" class="nback">返回</a><b class="tit">预定中</b></h3>
-  <div class="jf-body">
-  	<table width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <th scope="col" align="left" width="56%">餐品名</th>
-    <th scope="col" align="right" width="36%">时间</th>
-  </tr>
-  <tr>
-    <td align="left">惠心上品斑鱼火锅</td>
-    <td align="right">2014-03-25</td>
-  </tr>
-  <tr>
-    <td align="left">惠心上品斑鱼火锅</td>
-    <td align="right">2014-03-25</td>
-  </tr>
-  <tr>
-    <td align="left">惠心上品斑鱼火锅</td>
-    <td align="right">2014-03-25</td>
-  </tr>
-  <tr>
-    <td align="left">惠心上品斑鱼火锅</td>
-    <td align="right">2014-03-25</td>
-  </tr>
-  <tr>
-    <td align="left">惠心上品斑鱼火锅</td>
-    <td align="right">2014-03-25</td>
-  </tr>
-  <tr>
-    <td align="left">惠心上品斑鱼火锅</td>
-    <td align="right">2014-03-25</td>
-  </tr>  
-</table>
-  </div>
+	<h3 class="fn-tit"><a href="javascript:history.go(-1);" class="nback">返回</a><b class="tit">我的订单</b></h3>
+	<div class="bellows single" id="orderlist">
+	</div>
+</div>
+  
+  
+  
   <!--下导航-->
   <div class="js-navmenu nav-on-bottom style-2">
-    <div class="nav-menu has-menu-3"> <a href="/index.html" class="icon-home"></a>
+    <div class="nav-menu has-menu-3"> <a href="index.html" class="icon-home"></a>
       <div class="divide">&nbsp;</div>
       <div class="one"> <a class="mainmenu js-mainmenu" href="javascript:void(0);"> <i class="arrow-weixin"></i> 菜品 </a>
         <div class="submenu js-submenu"> <span class="arrow before-arrow"></span> <span class="arrow after-arrow"></span>
@@ -100,7 +77,7 @@ document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {Weixi
         </div>
       </div>
       <div class="divide">&nbsp;</div>
-      <div class="one"> <a class="mainmenu js-mainmenu" href="javascript:void(0);"> <i class="arrow-weixin"></i> 订单 </a>
+      <div class="one"> <a class="mainmenu js-mainmenu" href="javascript:void(0);" > <i class="arrow-weixin"></i> 订单 </a>
         <div class="submenu js-submenu"> <span class="arrow before-arrow"></span> <span class="arrow after-arrow"></span>
           <ul>
             <li> <a href="order.html"> 我的订单 </a> </li>
@@ -113,122 +90,105 @@ document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {Weixi
   </div>
   <!--nav-on-bottom下导航结束-->
 </div>
+
 <!--body--> 
 
 <script type="text/javascript" src="js/wap.min.js"></script>
+<script src="js/velocity.min.js"></script>
+<script src="js/bellows.min.js"></script>
 <script>
-var user_id = sessionStorage.getItem("user_id");
-$.ajax(
+var user_state =sessionStorage.getItem("user_state");
+if(!user_state){
+	alert("未登录，请先登录");
+	window.location.href="login.html";
+}
+var Custname =sessionStorage.getItem("user_name");
+data={"Custname":Custname};
+alert(data);
+var iG = iG||[];
+/*  iG=[
+           {id:"1",orderdetailid:"1",address:"杭电",sellername:"金拱门",orderprice:"23",ordertate:"0",time:"2018/12/9 22:04:20"}
+                    ,
+			{id:"2",orderdetailid:"1",address:"杭电",sellername:"肯德基",orderprice:"23",ordertate:"1",time:"2018/12/9 22:04:20"}
+                    ,
+			{id:"3",orderdetailid:"1",address:"杭电",sellername:"麦当劳",orderprice:"23",ordertate:"1",time:"2018/12/9 22:04:20"}
+			];*/
+			
+			$.ajax(
 					{
 						type:"post",
 						dataType:"json",
-						url:"getallorder",
-						data:{"user_id":JSON.stringify(user_id)},
+						url:"getorder",
+						data:{"data":JSON.stringify(data)},
 		                success:function(result){
-		                	//alert(result);
-							iG.items = result;
-							init();//ajax成功后执行init();
+		     
+						//iG = JSON.stringify(result);
+						iG = result;
+						$("#orderlist").html(listManger(iG));
+						alert(iG[0].orderid);
 		                }
 					}
 			)
-function init(){
-            setMenu(iG.items);
-			$("#J_list_Container").html(listManger(iG.items));
-            $("#loadingView").addClass("hide");
-        }
-        
-        function setMenu(_list){
-            iG.menu = [];
-            iG.indexMenu = (function(){
-                var menu;
-                var count = 0;
-                for(var i in _list){
-                    if(count===0){
-                        menu =  i;
-                    }
-                    count++;
-                    iG.menu.push(i);
-                }
-                return menu;
-            })();
-            buildMenu(iG.menu);
-        }
-        
-        function buildMenu(_list){
-            var menuHtml = "<dl>";
-            var active;
-            for(var i in _list){
-                active = "";
-                if(_list[i]===iG.indexMenu)active = "active";
-                menuHtml += "<dd class=\""+active+"\"><a data_name=\""+ _list[i] +"\">"+ _list[i] +"</a></dd>"
-            
-            }
-			menuHtml += "</dl>";
-            $("#J_menuList").html(menuHtml);
-        }
-        
-		function getIndex(_id){
-            var indexList = iG.items[iG.indexMenu];
-			for(var i in indexList){
-				if(indexList[i].id===_id){
-					return indexList[i]
+	
+function listManger(_list){
+
+	alert("inner");
+	var result = "";
+	for(var i in _list){
+		alert(i);
+		result += "<div class=\"bellows__item\"><div class=\"bellows__header\" onClick=\"listdata("+_list[i].orderid+")\" ><h3><span id=\"left\">"+_list[i].sellername+"</span>";
+		result += "<span id=\"left\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+_list[i].time+"</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+		if(_list[i].ordertate== 1){
+			result += "状态：<span style=\"color:green\">已送达</span>"
+			}else{
+				result += "状态：<span style=\"color:red\">配送中</span>"
 				}
-			}
+		result += "</h3></div>";
+		result += "<div class=\"bellows__content\" name=\"listdata\"><p></p></div>";
+		result += "</div>";
 		}
-		function submit(){
-			var data = iG.order;
-			var result = [];
-			for(var i in data){
-				result.push({id:iG.order[i].id,counter:iG.order[i].counter});
-			}
-			return JSON.stringify(result);
-		}
+		return result;
+
+	}
+
+
+
+
+
+function listdata(id){
+		var data = data||{};
+		_data={"orderid":id};
 		
-		function countPrice(){
-			var price = 0;
-			for(var i in iG.order){
-				price += Number(iG.order[i].price)*iG.order[i].counter;
+			$.ajax(
+					{
+						type:"post",
+						dataType:"json",
+						url:"getorderdetail",
+						data:{"data":JSON.stringify(_data)},
+		                success:function(result){
+		          
+							data =result;
+							alert(data);
+		                }
+					}
+				)
+						
+	var result = "";
+		result += "<ul class=\"foodlist\"><div id=\"J_list_Container\"><div class=\"foodintro clearfix\"><div class=\"foodcon floatl\"><p>订单编号:<b>"+data.orderid+"</b></p><p>顾客姓名：<b>"+data.custname+"</b></p><p>商家：<b>"+data.sellername+"</b></p><p>总价：<b>"+data.orderfoodpri+"</b></p><p>配送员：<b>"+data.orderrid+"</b></p></div></div></ul>";
+		for(var i in data.foods){
+			result += "<ul class=\"foodlist\"><div id=\"J_list_Container\"><div class=\"foodintro clearfix\"><img src=\""+data.foods[i].imageUrl+"\" class =\"imge\"><div class=\"foodcon floatl\"><p>"+data.foods[i].name+"</p><p>单价：<b>"+data.foods[i].price+"</b></p><p>数量：<b>"+data.foods[i].count+"</b></p></div></div></div></ul>"
 			}
-			return price;
-		}
-		function listManger(_list){
-			var result = "";
-			var listArr = [];
-            var indexList = _list[iG.indexMenu];
-			for(var i in indexList){
-				listArr.push(indexList[i]);
-				if(Math.floor(i/3)===0&&i>2){
-					result += buildList(listArr);
-					listArr = [];
-				}
-			}
-			result += "<div class=\"row\">";
-			result += buildList(listArr);
-			result += "</div>";
-			return result;
-		}
-		function buildList(_list){
-			var result = "";
-			for(var i in _list){
-				result += "<li><h3 class=\"tit\"><a href=\"foodcontent.html\">"+_list[i].name+"</a></h3><div class=\"foodintro clearfix\"><a class=\"foodimg floatl\"><img src=\""+_list[i].imageUrl+"\"></a><div class=\"foodcon floatl\"><p>单价<b>"+_list[i].price+"</b></p><p class=\"fts orange\">VIP：￥0.1</p><p>店铺：<b>"+_list[i].f_name+"</b></p><p class=\"btn fts clearfix\"><a class=\"floatl orange-btn\" onclick=\"shop("+i+")\">点菜</a><i class=\"icon-ok floatl dci\"></i></p></div></div><p class=\"fcomment clearfix\"> <span class=\"floatl\"><a href=\"#\"><i class=\"icon-thumbs-up\"></i>赞<em>215</em></a></span> <span class=\"floatl\"><a href=\"#\"><i class=\"icon-comment\"></i>评论<em>15</em></a></span><span class=\"floatl\" style=\"border-right:0; border-right:none;\"><a href=\"#\"><i class=\"icon-share-alt\"></i>转发</a></span></p><em class=\"lt ltgreen\">新品<br>上市</em></li>"}
-			return result;
-		}
-		function buildOrder(_list){
-			var result = " ";
-			var check = true;
-			
-			for(var i in _list){
-				if(_list[i].counter === 0)continue;
-				check = false;
-				result += " ";
-				
-				
-			}
-			if(check){
-				result += " ";
-			}
-			return result;
-		}
+		$("div[name='listdata']").html(result);
+	}
+$('.bellows').bellows({
+	  singleItemOpen: true,
+	  easing: 'ease-in-out',
+	  duration: 60
+	
+})	
 </script>
+<script type="text/javascript" src="js/wap.min.js"></script>
+<script src="js/velocity.min.js"></script>
+<script src="js/bellows.min.js"></script>
 </body>
 </html>
