@@ -52,7 +52,7 @@ public class IndexService {
 	public ArrayList<food> getFoodsById(int sellerid) throws Exception
 	{
 		if(!checkId("seller", sellerid)){
-			throw new Exception("没有此商家！");
+			throw new Exception("没有此商家！"); 
 		}
 		
 		ArrayList<food> foods;
