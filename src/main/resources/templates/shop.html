@@ -244,7 +244,7 @@ $(this).toggleClass("selected");
   <script src="js/jquery.js"></script> 
   <script>
   		var f_name = sessionStorage.getItem("shopname");
-		alert("进入"+name);
+		//alert("进入"+name);
   		var order = order||"";
 		var iG = iG||{};
         if(window.localStorage){
@@ -576,7 +576,7 @@ $(this).toggleClass("selected");
 			var totalPrice = countPrice();
 			var shopName  = sessionStorage.getItem("shopname"); 
 			var order = {"order_id":order_id,"name":name,"address":address,"phone":phone,"shopName":shopName,"totalPrice":totalPrice,"food":JSON.parse(JSON.stringify(iG.order)),"f_name":f_name};
-			alert(JSON.stringify(order));
+			//alert(JSON.stringify(order));
 			$.ajax(
 					{
 						type:"post",
@@ -587,7 +587,7 @@ $(this).toggleClass("selected");
 		                	if(data.statusCode==200){
 		                		alert("成功下单");
 		                		sessionStorage.setItem("orderid", data.orderid);
-		                		window.location.href="shop.html";
+		                		window.location.href="order.html";
 		                	}
 		                	if(data.statusCode==201){
 		                		alert("余额不足！");
@@ -596,6 +596,8 @@ $(this).toggleClass("selected");
 		                }
 					}
 				)
+				window.location.href="order.html";
+				sessionStorage.setItem("custorder",JSON.stringify(order));
 			})
 	</script>  
  </body>

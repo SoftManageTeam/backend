@@ -19,7 +19,6 @@ public class orders {
 	private float orderprice;
 	private Integer orderstate=-1;
 	private String time;
-
 	
 	public orders() {
 		super();
@@ -30,7 +29,7 @@ public class orders {
 		// TODO Auto-generated constructor stub
 		custname=username;
 		address=address2;
-		setPhonenumber(phone2);
+		phonenumber=phone2;
 		sellername=shopName;
 		orderprice=totalPrice;
 		time=string;

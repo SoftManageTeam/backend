@@ -120,6 +120,18 @@ public class indexController {
 	public String ordeingrHtml() {
 		return "/ordering.html";
 	}
+	
+	
+	/**
+	 * jifenhuodong.html请求跳转到jifenhuodong.html
+	 * 
+	 * @return
+	 */
+	@GetMapping("/jifenhuodong.html")
+	public String jifenhuodongHtml() {
+		return "/jifenhuodong.html";
+	}
+	
 
 	/**
 	 * 用户登录
@@ -250,6 +262,7 @@ public class indexController {
 		System.out.println(orderid);
 		try {
 			orderdetail = orderdetailRespository.findAllByOrderid(orderid);
+			System.out.println(orderdetail.getFoods());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -10,16 +10,28 @@
   <link href="css/buttons.css" rel="stylesheet" /> 
   <link href="css/flat.css" rel="stylesheet" /> 
   <link href="css/font-awesome.css" rel="stylesheet" /> 
-  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements --> 
-  <!--[if lt IE 9]>
-      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]--> 
-  <!-- Le fav and touch icons --> 
-  <script>
-	document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
-		WeixinJSBridge.call('hideToolbar');
-	});
-</script> 
+  <link rel="stylesheet" type="text/css" href="FortAwesome/docs/assets/css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" href="css/bellows.css">
+<link rel="stylesheet" href="css/bellows-theme.css">
+<link rel="stylesheet" href="css/lrtk.css">
+<link rel="stylesheet" type="text/css" href="FortAwesome/docs/assets/css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" href="css/bellows.css">
+<link rel="stylesheet" href="css/bellows-theme.css">
+<link rel="stylesheet" href="css/lrtk.css">
+<script src="js/jquery.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script type="text/javascript" src="js/swipe.js"></script>
+<script src="js/jquery.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script type="text/javascript">
+   var _global = {};
+	   _global.spm = {};
+
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {WeixinJSBridge.call('hideToolbar');});
+</script>
+<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
  </head> 
  <body> 
   <div id="wrapper2" class="viewer wrapper countpage clearfix show" style="display:none"> 
@@ -31,7 +43,7 @@
         <p class="notice"> </p> 
        </div> 
        <div class="col-xs-6"> 
-        <p class="notice tar"> 共计 <span class="price" id="price_txt">46元</span> </p> 
+        <p class="notice tar"> <span class="price" id="price_txt">我的订单</span> </p> 
        </div> 
       </div> 
      </div> 
@@ -40,26 +52,90 @@
    <section class="oder_content"> 
     <div class="container" id="J_order_list">
      <div class="row" id="J_order_Manager"> 
-      <div class="col-xs-12 clearfix board_content"> 
+      <div class="col-xs-12 clearfix board_content" > 
        <div class="col-xs-4 title_contain"> 
         <p class="menu_title ">我的订单</p> 
        </div> 
-       <div class="col-xs-2"> 
-       </div> 
-       
-       <div class="col-xs-3 title_contain"> 
-        
-       </div> 
       </div> 
      </div> 
-     <div class="row gray_line"> 
-      <div class="col-md-12 clearfix board_content"> <div class="col-xs-6"> <div class="col-md-6 clearfix order_item_name"> <label>五花肉</label> </div><div class="col-md-6 clearfix order_price">23元一份</div> </div><div class="col-xs-6"><div class="btn_wrap counter"><i class="nocounter fl" style="display: inline-block;">1</i></div></div></div>
-     </div>
-	   <div class="row gray_line"> 
-      <div class="col-md-12 clearfix board_content"> <div class="col-xs-6"> <div class="col-md-6 clearfix order_item_name"> <label>小青菜</label> </div><div class="col-md-6 clearfix order_price">8元一份</div> </div><div class="col-xs-6"><div class="btn_wrap counter"><i class="nocounter fl" style="display: inline-block;">2</i></div></div></div>
+     <div class="row gray_line"  name="listdata"> 
+      
      </div>
     </div> 
    </section> 
-  </div>   
+  </div>
+  
+    <!--下导航-->
+  <div class="js-navmenu nav-on-bottom style-2">
+    <div class="nav-menu has-menu-3"> <a href="index.html" class="icon-home"></a>
+      <div class="divide">&nbsp;</div>
+      <div class="one"> <a class="mainmenu js-mainmenu" href="javascript:void(0);"> <i class="arrow-weixin"></i> 菜品 </a>
+        <div class="submenu js-submenu"> <span class="arrow before-arrow"></span> <span class="arrow after-arrow"></span>
+          <ul>
+            <li> <a href="foodlist.html"> 火锅 </a> </li>
+            <li> <a href="foodlist.html"> 地方菜 </a> </li>
+            <li> <a href="foodlist.html"> 西餐 </a> </li>
+            <li> <a href="foodlist.html"> 快餐 </a> </li>
+          </ul>
+        </div>
+      </div>
+      <div class="divide">&nbsp;</div>
+      <div class="one"> <a class="mainmenu js-mainmenu" href="javascript:void(0);"> <i class="arrow-weixin"></i> 会员 </a>
+        <div class="submenu js-submenu"> <span class="arrow before-arrow"></span> <span class="arrow after-arrow"></span>
+          <ul>
+            <li> <a href="foodlist.html"> 我要订位 </a> </li>
+            <li> <a href="membercenter.html"> 会员中心 </a> </li>
+          </ul>
+        </div>
+      </div>
+      <div class="divide">&nbsp;</div>
+      <div class="one"> <a class="mainmenu js-mainmenu" href="javascript:void(0);"> <i class="arrow-weixin"></i> VIP </a>
+        <div class="submenu js-submenu"> <span class="arrow before-arrow"></span> <span class="arrow after-arrow"></span>
+          <ul>
+            <li> <a href="register.html"> 我要成为VIP </a> </li>
+            <li> <a href="score.html"> 积分兑换 </a> </li>
+          </ul>
+        </div>
+      </div>
+      <div class="divide" >&nbsp;</div>
+      <div class="one"> <a class="mainmenu js-mainmenu" href="javascript:void(0);" > <i class="arrow-weixin"></i> 订单 </a>
+        <div class="submenu js-submenu"> <span class="arrow before-arrow"></span> <span class="arrow after-arrow"></span>
+          <ul>
+            <li> <a href="order.html"> 我的订单 </a> </li>
+          </ul>
+        </div>
+        <!--submenu js-submenu--> 
+      </div>
+      <!--one--> 
+    </div>
+  </div>
+  <!--nav-on-bottom下导航结束-->   
+
+ <script type="text/javascript" src="js/wap.min.js"></script>
+<script src="js/velocity.min.js"></script>
+<script src="js/bellows.min.js"></script>
+ <script>
+
+ var custorder =sessionStorage.getItem("custorder");
+	order = JSON.parse(custorder);
+data = {
+		orderid:order.order_id,
+		sellername:order.shopName,
+		custname : order.name,
+		price: order.totalPrice,
+		orderfoodpri :order.order_id,
+		foods:JSON.parse(JSON.stringify(order.food))
+}
+var result = "";
+		result += "<ul class=\"foodlist\"><div id=\"J_list_Container\"><div class=\"foodintro clearfix\"><div class=\"foodcon floatl\"><p>订单编号:<b>"+data.orderid+"</b></p><p>顾客姓名：<b>"+data.custname+"</b></p><p>商家：<b>"+data.sellername+"</b></p><p>配送员：<b>待分配</b></p></div></div></ul>";
+		for(var i in data.foods){
+			result += "<ul class=\"foodlist\"><div id=\"J_list_Container\"><div class=\"foodintro clearfix\"><img src=\""+data.foods[i].imageUrl+"\" class =\"imge\" style=\"width:30%; height:30%\"><div class=\"foodcon floatl\"><p>"+data.foods[i].name+"</p><p>单价：<b>"+data.foods[i].price+"</b></p><p>数量：<b>"+data.foods[i].counter+"</b></p></div></div></div></ul>"
+			}
+		result += "<ul class=\"foodlist\"><div id=\"J_list_Container\"><div class=\"foodintro clearfix\"><div class=\"foodcon floatl\"><p style=\"margin-left:60%\"><h3>总价：<b>"+data.price+"元</h3></b></p></div></div></ul>";
+		$("div[name='listdata']").html(result);
+ </script>
+ <script type="text/javascript" src="js/wap.min.js"></script>
+<script src="js/velocity.min.js"></script>
+<script src="js/bellows.min.js"></script>
  </body>
 </html>

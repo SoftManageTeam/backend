@@ -27,7 +27,7 @@ function search(){
 	var keys = $('input[name="keys"]').val();
 	sessionStorage.setItem("keys", keys);
 	window.location.href="foodlist.html";
-	alert("搜索"+keys);
+	//alert("搜索"+keys);
 	
 }
 document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {WeixinJSBridge.call('hideToolbar');});
@@ -53,7 +53,7 @@ document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {Weixi
     <form class="clearfix">
       <input type="button" class="sbtn icon-search" onClick="search()">
       <input type="text" name="keys" id="keys" class="stxt" onfocus="if (value==defaultValue)value=''" onblur="if(!value)value=defaultValue" value="寻找菜品、店面" >
-      <a href="order.html" title="我的订单" class="floatr"></a>
+      <a href="membercenter.html" title="我的订单" class="floatr"></a>
     </form>
   </div>
   <div class="banner clearfix">

@@ -6,5 +6,7 @@ import com.bieezhe.domain.seller;
 
 public interface sellerRepository extends JpaRepository<seller, Integer> {
 
+	seller findBySellername(String shopName);
+
 }
 

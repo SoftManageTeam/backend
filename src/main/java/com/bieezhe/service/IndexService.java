@@ -3,6 +3,8 @@ package com.bieezhe.service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,11 +14,16 @@ import com.bieezhe.domain.customer;
 import com.bieezhe.domain.food;
 import com.bieezhe.domain.orderdetail;
 import com.bieezhe.domain.orders;
+import com.bieezhe.domain.rider;
+import com.bieezhe.domain.seller;
 import com.bieezhe.repository.customerRepository;
 import com.bieezhe.repository.foodRepository;
-import com.bieezhe.repository.ordersRepository;
 import com.bieezhe.repository.orderdetailRepository;
+import com.bieezhe.repository.ordersRepository;
+import com.bieezhe.repository.riderRepository;
 import com.bieezhe.repository.sellerRepository;
+
+import com.bieezhe.utils.PieceAlgorithm;
 
 @Service
 public class IndexService {
@@ -36,6 +43,12 @@ public class IndexService {
 	@Autowired
 	private ordersRepository ordersRepository;
 
+	@Autowired
+	private riderRepository riderRepository;
+	
+	@Autowired
+	private PieceAlgorithm PieceAlgorithm;
+	
 	public ArrayList<food> getFoodsById(int sellerid) throws Exception
 	{
 		if(!checkId("seller", sellerid)){
@@ -83,24 +96,15 @@ public class IndexService {
 	    String phone = order.getString("phone");
 	    String food = order.getString("food");
 	    JSONObject _food = (JSONObject) JSONObject.parse(food);
-	    System.out.println("food: "+food);
-	    System.out.println("_food size: "+_food.size());
-	    System.out.println("id1: "+_food.getString("1"));
-	    
+
 	    String shopName = order.getString("shopName");
 	    float totalPrice = Float.parseFloat(order.getString("totalPrice"));
 	    
-	    
-	    System.out.println("111");
 		customer cust = null;
 		cust = customerRepository.findByCustname(username);//如何返回某个字段的值
-		System.out.println("id: "+cust.getCustid());
-		System.out.println("222");
 		if(cust.getCustbalance()>totalPrice){
-			System.out.println("333");
 			Date date = new Date();
 		    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
-		    System.out.println(df.format(date));
 		    orders odr = new orders(username,address,phone,shopName,totalPrice,df.format(date));
 		    
 		    //将订单存入数据库
@@ -108,16 +112,33 @@ public class IndexService {
 		    orderdetail orderdetail = new orderdetail(newOdr.getOrderid(),food.toString(),_food.size(),totalPrice,username,df.format(date));
 		    
 		    //更新用户余额
-		    customerRepository.setCustbalance(cust.getCustbalance()-totalPrice);
+		    customerRepository.setCustbalance(cust.getCustbalance()-totalPrice,username);
 		    
 		    //将详细订单存入数据库
 		    orderdetail od = orderdetailRepository.save(orderdetail);
-		    
+		
 		    //更新orders中的信息
-		    ordersRepository.setOrderdetailid(od.getOrderdetailid());
+		    ordersRepository.setOrderdetailid(od.getOrderdetailid(),newOdr.getOrderid());
 		    JSONObject data = new JSONObject();
 		    data.put("statusCode",200);
 		    data.put("orderid",odr.getOrderid());
+		    
+		    //调用派单算法
+		    seller sr = sellerRepository.findBySellername(shopName);
+		    List<rider> alrd =  riderRepository.findAll();
+		    LinkedList<rider> llrd = new LinkedList<rider>();
+		    for (rider rd : alrd){
+		    	llrd.add(rd);
+		    }
+		    rider rd = PieceAlgorithm.PieceAlgorthm(sr,llrd);
+		    
+		    //修改rider信息
+		    riderRepository.setOrderamount(rd.getOrderamount()+1,rd.getExprid());
+		    
+		    
+		    //修改订单信息
+		    ordersRepository.setExpressid(rd.getExprid(),newOdr.getOrderid());
+		    
 		    return data;
 		}else{
 			JSONObject data = new JSONObject();
@@ -142,7 +163,6 @@ public class IndexService {
 	    }
 	    String password = user.getString("password");
 	    customer cust = new customer();
-	    System.out.println("custid: "+cust.getCustid());
 	    cust.setCustname(username);
 	    cust.setCustpassword(password);
 	    customerRepository.save(cust);

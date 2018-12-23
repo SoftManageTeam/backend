@@ -1,3 +1,5 @@
+server:
+  port: 8090
 spring: 
   datasource: 
     driver-class-name: com.mysql.jdbc.Driver
@@ -7,8 +9,14 @@ spring:
     
   jpa: 
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true 
  
   thymeleaf:
     prefix: classpath:/templates/
+    
+logging:
+  pattern: #设置控制台显示的格式，不影响日志文件
+    console: "%d - %msg%n"
+  path: F:/var/log/tomcat/  #配置文件的路径
+  file: F:/var/log/tomcat/sell.log  #默认配置文件名为spring.log,这里设置为sell.log

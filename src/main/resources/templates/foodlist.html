@@ -28,7 +28,7 @@
   <script>
   		var keys = sessionStorage.getItem("keys");
 		$('input[name="keys"]').val(keys);
-		alert("此页面为 "+keys+"的搜索页")
+		//alert("此页面为 "+keys+"的搜索页")
 		var iG = iG||{};
         if(window.localStorage){
             try{
@@ -173,7 +173,7 @@
 		}
 		function shop(i){
 			var name = iG.items["商品名"][i].f_name
-			alert(JSON.stringify(name));
+			//alert(JSON.stringify(name));
 			sessionStorage.setItem("shopname", name);
 			window.location.href="shop.html";
 		}

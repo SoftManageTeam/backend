@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width" />
+<meta name="viewport" content="initial-scale=1.0,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link type="text/css" href="css/style.css" rel="stylesheet" />
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/swipe.js"></script>
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<title>注册</title>
+</head>
+
+<body>
+	<div class="login">
+		<div class="logo"></div>
+		<div class="main">
+			<form>
+				<table width="100%" border="0" cellspacing="0" class="main1">
+					<tr>
+						<td class="text"><input type="text/css" class="text1"
+							id="name" name="name" onkeydown="tipclear()" placeholder="输入用户名" /><span
+							id="tishi1"></span></td>
+					</tr>
+				</table>
+				<div class="linee"></div>
+				<table width="100%" border="0" cellspacing="0" class="main1">
+					<tr>
+						<td class="text"><input type="text/css" class="text1"
+							id="pw1" onkeydown="tipclear()" placeholder="输入新密码" /><span
+							id="tishi2"></span></td>
+					</tr>
+				</table>
+				<div class="linee"></div>
+				<table width="100%" border="0" cellspacing="0" class="main1">
+					<tr>
+						<td class="text"><input type="text/css" class="text1"
+							id="pw2" onkeydown="tipclear()" onkeyup="validate()"
+							placeholder="输入确认密码" /><span id="tishi3"></span><span id="tishi"></span></td>
+					</tr>
+				</table>
+				<div class="linee"></div>
+		</div>
+		<div class="button">
+			<input type="button" id="submit" name="submit" value="注 册"
+				class="text2" />
+		</div>
+	</div>
+	<div class="footrt">
+		<div class="footrt_left">
+			<a href="login.html">已有账号？立即登录</a>
+		</div>
+	</div>
+	</form>
+</body>
+<script type="text/javascript">
+	function tipclear() {
+		document.getElementById("tishi1").innerHTML = "";
+		document.getElementById("tishi2").innerHTML = "";
+		document.getElementById("tishi3").innerHTML = "";
+	}
+	function validate() {
+		var pw1 = document.getElementById("pw1").value;
+		var pw2 = document.getElementById("pw2").value;
+		if (pw1 == pw2) {
+			document.getElementById("tishi").innerHTML = "<font color='green'>密码相同</font>";
+			document.getElementById("submit").disabled = false;
+		} else {
+			document.getElementById("tishi").innerHTML = "<font color='red'>两次密码不相同</font>";
+			document.getElementById("submit").disabled = true;
+		}
+	}
+	$("#submit").click(function() {
+		var name = document.getElementById("name").value;
+		var pw1 = document.getElementById("pw1").value;
+		var pw2 = document.getElementById("pw2").value;
+		if (name == "") {
+			document.getElementById("tishi1").innerHTML = "<font color='red'>请输入用户名</font>";
+			document.getElementById("submit").style.backgroundColor = "#C0C0C0";
+		}
+		if (pw1 == "") {
+			document.getElementById("tishi2").innerHTML = "<font color='red'>请输入密码</font>";
+			document.getElementById("submit").style.backgroundColor = "#C0C0C0";
+		}
+		if (pw2 == "") {
+			document.getElementById("tishi3").innerHTML = "<font color='red'>请确认密码</font>";
+			document.getElementById("submit").style.backgroundColor = "#C0C0C0";
+		}
+		if ((name != "") && (pw1 != "") && (pw2 != "")) {
+			var pw = $('input[id="pw1"]').val();
+			var name = $('input[name="name"]').val()
+			var rider = {
+				"name" : name,
+				"password" : pw
+			};
+			$.ajax(
+				{
+					type : "post",
+					dataType : "json",
+					url : "postrider",
+					data : {
+						"rider" : JSON.stringify(rider)
+					},
+					success : function(state) {
+
+						if (state == 310) {
+							alert("注册成功");
+							window.location.href = "riderlogin.html";
+						}
+						if (state == 311) {
+							alert("注册失败，骑手已存在！")
+						}
+					}
+				}
+			)
+			
+		}
+	}
+	)
+</script>
+
+</html>

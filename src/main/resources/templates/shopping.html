@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width" />
+<meta name="viewport" content="initial-scale=1.0,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link type="text/css" href="css/style.css" rel="stylesheet" />
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+		<script type="text/javascript" src="js/swipe.js"></script>
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<title>我接的订单</title>
+</head>
+
+<body>
+	<div class="header">
+		<table width="100%" border="0" cellspacing="0" class="header_nav">
+			<tr>
+				<td width="10%" class="nav_left1"><a
+					href='javascript:window.history.go(-1)'><</a></td>
+				<td width="80%" class="nav_title">我接的订单</td>
+				<td width="10%" class="nav_r"></td>
+			</tr>
+		</table>
+	</div>
+	<div class="bodymain" id="orderlist"></div>
+	<div class="js">
+		<div class="jss"></div>
+	</div>
+
+	<!--/*底下导航*/-->
+	<table width="100%" border="0" cellspacing="0" class="nav">
+		<tr>
+			<td width="25" class="foot"><a href="shopping.html"><img
+					src="img/3.png" width="20%" height="auto" />
+					<p>
+						<span>我接的订单</span>
+					</p></a></td>
+			<td width="25" class="foot"><a href="member.html"><img
+					src="img/44.png" width="20%" height="auto" />
+					<p>我的</p></a></td>
+		</tr>
+
+	</table>
+	<div class="kb"></div>
+</body>
+<script>
+
+	var iG = iG||{};
+	$(function() {
+		/* var data=[
+		          {orderid:"1",orderdetailid:"1",address:"杭电",sellername:"金拱门",orderprice:"23",orderstate:"601",custname:"王小二",time:"2018/12/9 22:04:20"}
+		                   ,
+			{orderid:"2",orderdetailid:"1",address:"杭电",sellername:"肯德基",orderprice:"23",orderstate:"1",custname:"王小二",time:"2018/12/9 22:04:20"}
+		                   ,
+			{orderid:"3",orderdetailid:"1",address:"杭电",sellername:"麦当劳",orderprice:"23",orderstate:"1",custname:"王小二",time:"2018/12/9 22:04:20"}
+			];*/
+		var name = sessionStorage.getItem("rider_name");
+		var rider_name = {
+			"name" : name
+		};
+		$.ajax(
+			{
+				type : "post",
+				dataType : "json",
+				url : "riderorder",
+				data : {
+					"Ridername" : JSON.stringify(rider_name)
+				},
+				success : function(result) {
+					iG = result;
+					$("#orderlist").html(listManger(iG));
+				}
+			})
+			
+	})
+
+	function listManger(_list) {
+		var result = "";
+		var x = 1;
+		for (var i = 0; i < _list.length; i++) {
+			result += "<div class=\"bbb\"><a onClick=\"listdata(" + _list[i].orderid + ")\"><table width=\"95%\" border=\"0\" cellpadding=\"0\"><tr><td rowspan=\"2\"></td><td rowspan=\"2\" class=\"shop_pic\"><img src=\"img/cp.jpg\" width=\"100%\" height=\"auto\"/></td><td class=\"ddd\">" + _list[i].sellername + "</td><td><img src=\"img/bd.png\" width=\"65%\" height=\"65%\" style=\"margin-top:10%\" /></td></tr><tr><td class=\"ddd\">点击查看详情</td></tr></table></a><table width=\"95%\" border=\"0\" cellpadding=\"0\" class=\"shop_text\"><tr><td class=\"d3\">客户地址：" + _list[i].address + " </td><td class=\"d3\">客户姓名：" + _list[i].custname + "</td></tr></table>"
+			if (_list[i].orderstate != 601) {
+				result += "<table width=\"100%\" border=\"0\" cellpadding=\"0\"><tr><td class=\"d2\"><input type=\"submit\" value=\"送达\" onClick=\"finish(" + _list[i].orderid + ")\" class=\"jsjs\" /></td></tr></table></div>"
+			} else {
+				result += "<table width=\"100%\" border=\"0\" cellpadding=\"0\"><tr><td class=\"d2\"><input type=\"submit\"  disabled=\"disabled\" value=\"已完成\" onClick=\"finish(" + _list[i].orderid + ")\" class=\"jsjs_f\" /></td></tr></table></div>"
+			}
+		}
+		return result;
+	}
+
+	function listdata(num) {
+		var order = iG;
+		var myorder = {};
+		for (var i = 0; i < order.length; i++) {
+			if (num == order[i].orderid) {
+				myorder = {
+					id : order[i].orderid,
+					sellername : order[i].sellername,
+					address : order[i].address,
+					time : order[i].time,
+					price : order[i].orderprice
+				};
+			}
+		}
+		sessionStorage.setItem("reder_order", JSON.stringify(myorder));
+		window.location.href = "product.html";
+	}
+	
+	function finish(id) {
+		var orderid = {"orderid" : id};
+		$.ajax({
+			type : "post",
+			dataType : "json",
+			url : "finishorder",
+			data : {"data" : JSON.stringify(orderid)},
+			success : function(statusCode) {
+				if(statusCode==500){
+					alert("修改订单状态成功！");
+					window.location.href = "shopping.html";
+				}
+				if(statusCode==501){
+					alert("修改订单状态失败！");
+					window.location.href = "shopping.html";
+				}
+			}
+		})
+	}
+</script>
+</html>

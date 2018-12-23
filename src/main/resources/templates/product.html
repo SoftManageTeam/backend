@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width"/>
+<meta name="viewport" content="initial-scale=1.0,user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link type="text/css" href="css/style.css" rel="stylesheet" />
+<script src="js/jquery.js"></script> 
+<script src="js/bootstrap.min.js"></script> 
+<script type="text/javascript" src="js/swipe.js"></script>
+<script src="js/jquery.js"></script> 
+<script src="js/bootstrap.min.js"></script>  
+<title>产品详情</title>
+</head>
+
+<body>
+	<div class="header">
+    <table width="100%" border="0" cellspacing="0" class="header_nav">
+    	<tr>
+        	<td width="10%" class="nav_left1"><a  href='javascript:window.history.go(-1)'><</a></td>
+            <td width="80%"class="nav_title">产品详情</td>
+            <td width="10%" class="nav_r"></td>
+        </tr>
+    </table>
+    </div>
+
+    <div class="bodymain">
+        <div class="cp">
+        	<div class="cp_left">
+            	<div><span id="name"></span></div>
+                <div><h5>客户电话：0532-1234567</h5></div>
+            </div>
+            <div class="cp_right">共计：<span id="price"></span>元</div>
+        </div>
+        <div class="dz">
+        	<div class="dz_left">
+            	<div>味道：5 速度：5</div>
+                <div><span id="phone"></span></div>
+                <div>外卖时间：<span id="time"></span></div>
+                <div>1.3km</div>
+            </div>
+            <div class="dz_right"><img src="img/bd.png" width="70%" height="auto" /></div>
+        </div>
+
+    
+</body>
+<script>
+$(function(){
+var torder =sessionStorage.getItem("reder_order");
+	order = JSON.parse(torder);
+$("#name").html(order.sellername);
+$("#address").html(order.address);
+$("#time").html(order.time);
+$("#price").html(order.price);
+})
+</script>
+</html>

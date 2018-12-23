@@ -26,6 +26,11 @@ document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {Weixi
 </script>
 <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
 <script type="text/javascript">
+var user_state =sessionStorage.getItem("user_state");
+if(!user_state){
+	alert("未登录，请先登录");
+	window.location.href="login.html";
+}
 $(document).ready(function(){	
 $(".dci").click( function () { 
 $(this).toggleClass("selected");
@@ -47,7 +52,7 @@ $(this).toggleClass("selected");
   <dl class="mem-orderlist mem">
   	<dt>订单</dt>
     <dd>
-    	<p><a href="ordering.html" class="clearfix"><span class="floatl"><i class="icon-pencil"></i>预定中</span><em class="floatr">0<i class="icon-chevron-right"></i></em></a></p>
+    	<p><a href="ordering.html" class="clearfix"><span class="floatl"><i class="icon-pencil"></i>我的订单</span><em class="floatr">0<i class="icon-chevron-right"></i></em></a></p>
         <p><a href="yichengjiao.html" class="clearfix"><span class="floatl"><i class="icon-check"></i>已成交</span><em class="floatr">0<i class="icon-chevron-right"></i></em></a></p>
         <p><a href="weichengjiao.html" class="clearfix"><span class="floatl"><i class="icon-check-empty"></i>未成交</span><em class="floatr">0<i class="icon-chevron-right"></i></em></a></p>
     </dd>
@@ -117,6 +122,7 @@ $(this).toggleClass("selected");
 
 <script type="text/javascript" src="js/wap.min.js"></script>
 <script>
+
 var name = sessionStorage.getItem("user_name");
 $("#name").html(name);
 $("#name2").html(name);

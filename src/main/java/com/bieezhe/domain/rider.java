@@ -5,15 +5,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class expresser {
+public class rider {
 
 	@Id
 	@GeneratedValue
-	private Integer exprid;
+	private Integer exprid=-1;
 	private String exprname;
-	private String exprtel;
-	private float longitude;
-	private float latitude;
+	private String exprtel="-1";
+	private float longitude=-1;
+	private float latitude=-1;
+	private String password;
+	private int orderamount=0;
 	public Integer getExprid() {
 		return exprid;
 	}
@@ -43,6 +45,24 @@ public class expresser {
 	}
 	public void setLatitude(float latitude) {
 		this.latitude = latitude;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public int getOrderamount() {
+		return orderamount;
+	}
+	public void setOrderamount(int orderamount) {
+		this.orderamount = orderamount;
+	}
+	@Override
+	public String toString() {
+		return "rider [exprid=" + exprid + ", exprname=" + exprname + ", exprtel=" + exprtel + ", longitude="
+				+ longitude + ", latitude=" + latitude + ", password=" + password + ", orderamount=" + orderamount
+				+ "]";
 	}
 	
 }

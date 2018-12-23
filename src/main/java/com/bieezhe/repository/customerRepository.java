@@ -16,8 +16,8 @@ public interface customerRepository extends JpaRepository<customer, Integer> {
 
 	@Modifying
 	@Transactional
-	@Query("update customer c set c.custbalance=?1 ")
-	int setCustbalance(float money);
+	@Query("update customer c set c.custbalance=?1 where c.custname=?2 ")
+	int setCustbalance(float money, String username);
 
 }
 
