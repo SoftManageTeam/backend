@@ -1,13 +1,18 @@
 package com.bieezhe.service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bieezhe.domain.customer;
@@ -75,17 +80,26 @@ public class IndexService {
 		return exist;
 	}
 
-	public int login(String name, String password) {
+	public JSONObject login(String name, String password) {
 		// TODO Auto-generated method stub
 		boolean exist =customerRepository.existsByCustname(name);
-		if(!exist)
-			return 102;
+		JSONObject data = new JSONObject();
+	    
+		if(!exist){
+			data.put("statusCode",102);
+			return data;
+		}
+		
 		customer cust = null;
 		cust = customerRepository.findByCustname(name);//如何返回某个字段的值
 		if(cust.getCustpassword().equals(password)){
-			return 100;
+			data.put("statusCode",100);
+			data.put("money",cust.getCustbalance());
+			return data;
+			
 		}else{
-			return 101;
+			data.put("statusCode",101);
+			return data;
 		}
 	}
 
@@ -135,7 +149,7 @@ public class IndexService {
 		    //修改rider信息
 		    riderRepository.setOrderamount(rd.getOrderamount()+1,rd.getExprid());
 		    
-		    
+		    System.out.println("骑手id："+rd.getExprid());
 		    //修改订单信息
 		    ordersRepository.setExpressid(rd.getExprid(),newOdr.getOrderid());
 		    
@@ -167,5 +181,54 @@ public class IndexService {
 	    cust.setCustpassword(password);
 	    customerRepository.save(cust);
 		return 300;
+	}
+
+	public JSONObject cancelOrder(JSONObject order) {
+		// TODO Auto-generated method stub
+		int orderid = Integer.parseInt(order.getString("orderid"));
+
+		//获取订单创建时间，并判断是否在5分钟以内
+		orders od = ordersRepository.findByOrderid(orderid);
+		customer cust = customerRepository.findByCustname(od.getCustname());
+		Date now = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date orderTime=null;
+		try {
+			orderTime = sdf.parse(od.getTime());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		long diff = now.getTime() - orderTime.getTime();//这样得到的差值是毫秒级别  
+		long minutes = diff/1000;
+
+		if(minutes<300){
+			//修改订单状态
+			ordersRepository.setOrderstate2(602,orderid);
+			//修改用户余额
+			customerRepository.setCustbalance(cust.getCustbalance()+od.getOrderprice(), cust.getCustname());
+			
+			JSONObject data = new JSONObject();
+		    data.put("statusCode",602);
+		    
+			return data;
+		}
+		else{
+			JSONObject data = new JSONObject();
+		    data.put("statusCode",603);
+		    
+			return data;
+			
+		}
+		
+	}
+
+	public int getordernum(JSONObject order) {
+		// TODO Auto-generated method stub
+		String name = order.getString("name");
+		
+		int number = ordersRepository.getordernum(name);
+		
+		return number;
 	}
 }

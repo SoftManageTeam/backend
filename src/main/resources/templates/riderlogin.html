@@ -22,7 +22,7 @@
 			<table width="100%" border="0" cellspacing="0" class="mainl">
 				<tr>
 					<td class="text"><input type="text/css" class="text1"
-						name="name" placeholder="输入手机号" /></td>
+						name="name" placeholder="输入用户名" /></td>
 				</tr>
 			</table>
 			<div class="linee"></div>
@@ -52,8 +52,8 @@
 var rider_state =sessionStorage.getItem("rider_state");
 if(rider_state){
 	alert("已登录");
-	window.location.href="index.html";
-}else{alert("未登录");}
+	window.location.href="member.html";
+}
 function login(){
 var name = $('input[name="name"]').val();
 var paws = $('input[name="password"]').val();

@@ -12,6 +12,8 @@ import com.bieezhe.domain.orders;
 
 public interface ordersRepository extends JpaRepository<orders, Integer> {
 
+
+	//@Query(value="select * from orders where custname=?1 and orderstate != 602",nativeQuery=true)
 	ArrayList<orders> findAllByCustname(String Custname );
 
 	@Modifying
@@ -25,6 +27,11 @@ public interface ordersRepository extends JpaRepository<orders, Integer> {
 	@Transactional
 	@Query("update orders os set os.orderstate=?1 where os.orderid=?2")
 	int setOrderstate(int i,int orderid) ;
+	
+	@Modifying
+	@Transactional
+	@Query("update orders os set os.orderstate=?1 where os.orderid=?2")
+	int setOrderstate2(int i,int orderid) ;
 
 	@Modifying
 	@Transactional
@@ -33,6 +40,9 @@ public interface ordersRepository extends JpaRepository<orders, Integer> {
 
 
 	orders findByOrderid(int orderid);
+
+	@Query(value="SELECT COUNT(*) FROM orders where custname=?1 and orderstate != 601 ",nativeQuery=true)
+	int getordernum(String name);
 
 }
 

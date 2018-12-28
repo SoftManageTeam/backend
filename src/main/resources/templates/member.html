@@ -54,7 +54,7 @@
                 </tr> -->
                 <tr>
                 	<td class="my_main_p"><a href="shopping.html">我接的订单</a></td>
-                    <td class="my_mainn_p"><a href="shopping.html"><span id ="tishi"></span>></a></td>
+                    <td class="my_mainn_p"><a href="shopping.html"><span style="font-size:12px" id ="tishi"></span></a></td>
                 </tr>
              </table> 
              <table width="100%" border="0" cellspacing="0" class="my_n">   
@@ -98,22 +98,23 @@
 <script>
 var name = sessionStorage.getItem("rider_name");
 var phone = sessionStorage.getItem("rider_phone");
-$("#name").html(order.custname);
+$("#name").html(name);
 $("#phone").html(phone);
 setInterval(function(){  
+		var custname = {"name" : name};
          $.ajax(
 					{
 						type:"post",
 						dataType:"json",
-						url:"gitordernum",
-						data:{"data":name},
+						url:"getordernum",
+						data : {"data" : JSON.stringify(custname)},
 		                success:function(result){
 		                	
 							num = result;
 							$("#tishi").html("未完成订单："+num);
 		                }  
   
-      },300);  
-})
+      });  
+},10000)
 </script>
 </html>

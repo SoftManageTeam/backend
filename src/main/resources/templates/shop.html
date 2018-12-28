@@ -10,9 +10,8 @@
   <link href="css/buttons.css" rel="stylesheet" /> 
   <link href="css/flat.css" rel="stylesheet" />
   <link href="css/font-awesome.css" rel="stylesheet" />
-  <link rel="stylesheet" type="text/css" href="FortAwesome/docs/assets/css/font-awesome.css">
+   <link href="css/font-awesome.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="style.css" />
-  <link rel="stylesheet" type="text/css" href="FortAwesome/docs/assets/css/font-awesome.css">
 <link rel="stylesheet" type="text/css" href="style.css" />
 <script src="js/jquery.js"></script> 
 <script src="js/bootstrap.min.js"></script> 
@@ -28,6 +27,12 @@ document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {Weixi
 </script>
 <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
 <script type="text/javascript">
+var user_state =sessionStorage.getItem("user_state");
+if(!user_state){
+	alert("未登录，请先登录");
+	window.location.href="login.html";
+}
+
 $(document).ready(function(){	
 $(".dci").click( function () { 
 $(this).toggleClass("selected");
@@ -243,20 +248,12 @@ $(this).toggleClass("selected");
  
   <script src="js/jquery.js"></script> 
   <script>
-  		var f_name = sessionStorage.getItem("shopname");
-		//alert("进入"+name);
+		var address = JSON.parse(sessionStorage.getItem("user_address"));
+		//alert("进入"+name); 
   		var order = order||"";
 		var iG = iG||{};
-        if(window.localStorage){
-            try{
-                iG = JSON.parse(localStorage["zaiG"])||{};
-            }catch(e){
-                localStorage.removeItem("zaiG");
-                iG = iG||{};
-            }
-        }else{
+  
             iG = iG||{};
-        }
 		$(function(){
 			setTimeout(function () { window.scrollTo(0, 1); }, 0);
             
@@ -447,6 +444,15 @@ $(this).toggleClass("selected");
 			
 			});
 			$("#submitOrder").click(function(){
+				var data = address;
+				
+					for(var i in data){
+						if(data[i].rank=1){
+							$('input[name="name"]').val(data[i].custname);
+							$('input[name="phone"]').val(data[i].phone);
+							$('input[name="adress"]').val(data[i].address1+data[i].address2);
+						}
+					}
 				$(".viewer:visible").removeClass("show").addClass("hide");
 				$("#submitView").removeClass("hide").addClass("show");
 				/*$.ajax(
@@ -458,13 +464,13 @@ $(this).toggleClass("selected");
 							order_id = result;
 		                }
 					}	)*/
-					order_id = 000001;
-		
+					order_id = 11664;
 			})
 			$("#cancelSubmit").click(function(){
 				$(".viewer:visible").removeClass("show").addClass("hide");
 				$("#wrapper2").removeClass("hide").addClass("show");
 			});
+
 		});
         function init(){
             setMenu(iG.items);
@@ -570,7 +576,8 @@ $(this).toggleClass("selected");
 			return result;
 		}
 		$("#stickyGrowl").click(function(){ 
-			var name = $('input[name="name"]').val();
+			var name = sessionStorage.getItem("user_name");
+			var f_name = $('input[name="name"]').val();
 			var address=form2.adress.value;
 			var phone = form2.phone.value;
 			var totalPrice = countPrice();

@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,7 +61,8 @@ public class indexController {
 	@RequestMapping("/index.html")
 	public String helloHtml(HashMap<String, Object> map) {
 		// map.put("hello", "欢迎进入HTML页面");
-		return "/index.html";
+		System.out.println("fucccccccck");
+		return "index.html";
 	}
 
 	/**
@@ -68,7 +72,7 @@ public class indexController {
 	 */
 	@GetMapping("/foodlist.html")
 	public String foodlistHtml() {
-		return "/foodlist.html";
+		return "foodlist.html";
 	}
 
 	/**
@@ -78,7 +82,7 @@ public class indexController {
 	 */
 	@GetMapping("/login.html")
 	public String loginHtml() {
-		return "/login.html";
+		return "login.html";
 	}
 
 	/**
@@ -88,7 +92,7 @@ public class indexController {
 	 */
 	@GetMapping("/register.html")
 	public String registerHtml() {
-		return "/register.html";
+		return "register.html";
 	}
 
 	/**
@@ -98,7 +102,7 @@ public class indexController {
 	 */
 	@GetMapping("/shop.html")
 	public String shopHtml() {
-		return "/shop.html";
+		return "shop.html";
 	}
 
 	/**
@@ -108,7 +112,7 @@ public class indexController {
 	 */
 	@GetMapping("/order.html")
 	public String orderHtml() {
-		return "/order.html";
+		return "order.html";
 	}
 
 	/**
@@ -118,7 +122,7 @@ public class indexController {
 	 */
 	@GetMapping("/ordering.html")
 	public String ordeingrHtml() {
-		return "/ordering.html";
+		return "ordering.html";
 	}
 	
 	
@@ -129,9 +133,18 @@ public class indexController {
 	 */
 	@GetMapping("/jifenhuodong.html")
 	public String jifenhuodongHtml() {
-		return "/jifenhuodong.html";
+		return "jifenhuodong.html";
 	}
 	
+	/**
+	 * membercenter.html请求跳转到membercenter.html
+	 * 
+	 * @return
+	 */
+	@GetMapping("/membercenter.html")
+	public String membercenterHtml() {
+		return "membercenter.html";
+	}
 
 	/**
 	 * 用户登录
@@ -142,13 +155,19 @@ public class indexController {
 	 */
 	@PostMapping("/getuser")
 	@ResponseBody
-	public int getuser(@RequestParam Map<String, Object> params) {
+	public JSONObject getuser(@RequestParam Map<String, Object> params,HttpServletRequest req) {
 		System.out.println(params);
 		JSONObject data = (JSONObject) JSONObject.parse((String) params.get("data"));
 		String name = data.getString("name");
 		String password = data.getString("password");
-		int statusCode = indexService.login(name, password);
-		return statusCode;
+		JSONObject result = indexService.login(name, password);
+		
+		if(Integer.parseInt(result.getString("statusCode")) == 100){
+			HttpSession session = req.getSession();
+			session.setAttribute("user_login", "100");
+		}
+		
+		return result;
 	}
 
 	/**
@@ -269,6 +288,40 @@ public class indexController {
 		}
 		return orderdetail;
 	}
+	
+	/**
+	 * 取消订单，返回请求结果
+	 * 
+	 * @param params
+	 * @return
+	 */
+	@RequestMapping(value = "/ordercancel", method = RequestMethod.POST)
+	@ResponseBody
+	public JSONObject ordercancel(@RequestParam Map<String, Object> params) {
+		System.out.println("inner");
+		JSONObject order = (JSONObject) JSONObject.parse((String) params.get("data"));
+		JSONObject data = indexService.cancelOrder(order);
+
+		return data;
+	} 
+	
+	
+	
+	/**
+	 * 返回未完成订单数
+	 * 
+	 * @param params
+	 * @return
+	 */
+	@RequestMapping(value = "/getordernum", method = RequestMethod.POST)
+	@ResponseBody
+	public int getordernum(@RequestParam Map<String, Object> params) {
+		JSONObject custname = (JSONObject) JSONObject.parse((String) params.get("data"));
+		int  data = indexService.getordernum(custname);
+
+		return data;
+	} 
+	
 	/*
 	 * @GetMapping(value="") public List<seller>
 	 * getShops(@RequestParam("position") String position){

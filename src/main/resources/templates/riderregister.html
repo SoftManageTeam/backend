@@ -23,24 +23,31 @@
 				<table width="100%" border="0" cellspacing="0" class="main1">
 					<tr>
 						<td class="text"><input type="text/css" class="text1"
-							id="name" name="name" onkeydown="tipclear()" placeholder="输入用户名" /><span
+							id="name" name="name" onkeydown="tipclear()" placeholder="输入户名，可包含中英文与下划线" /><span
 							id="tishi1"></span></td>
 					</tr>
 				</table>
 				<div class="linee"></div>
 				<table width="100%" border="0" cellspacing="0" class="main1">
 					<tr>
-						<td class="text"><input type="text/css" class="text1"
-							id="pw1" onkeydown="tipclear()" placeholder="输入新密码" /><span
+						<td class="text"><input type="password" class="text1"
+							id="pw1" onkeydown="tipclear()" placeholder="输入6-12位密码" /><span
 							id="tishi2"></span></td>
 					</tr>
 				</table>
 				<div class="linee"></div>
 				<table width="100%" border="0" cellspacing="0" class="main1">
 					<tr>
-						<td class="text"><input type="text/css" class="text1"
+						<td class="text"><input type="password" class="text1"
 							id="pw2" onkeydown="tipclear()" onkeyup="validate()"
 							placeholder="输入确认密码" /><span id="tishi3"></span><span id="tishi"></span></td>
+					</tr>
+				</table>
+                <table width="100%" border="0" cellspacing="0" class="main1">
+					<tr>
+						<td class="text"><input type="text/css" class="text1"
+							id="key" name="key" onkeydown="tipclear()" placeholder="输入注册码" /><span
+							id="tishi4"></span></td>
 					</tr>
 				</table>
 				<div class="linee"></div>
@@ -58,39 +65,52 @@
 	</form>
 </body>
 <script type="text/javascript">
-	function tipclear() {
-		document.getElementById("tishi1").innerHTML = "";
-		document.getElementById("tishi2").innerHTML = "";
-		document.getElementById("tishi3").innerHTML = "";
+function isUserID(str) {
+        return /^[\u4E00-\u9FA5a-zA-Z0-9_]{1,12}$/.test($.trim(str));
+    }
+function isPassword (str) {
+        return  /^[^\u4e00-\u9fa5\s]{6,12}$/.test($.trim(str));
+    }
+function tipclear(){
+	document.getElementById("tishi1").innerHTML="";
+	document.getElementById("tishi2").innerHTML="";
+	document.getElementById("tishi3").innerHTML="";
 	}
-	function validate() {
-		var pw1 = document.getElementById("pw1").value;
-		var pw2 = document.getElementById("pw2").value;
-		if (pw1 == pw2) {
-			document.getElementById("tishi").innerHTML = "<font color='green'>密码相同</font>";
-			document.getElementById("submit").disabled = false;
-		} else {
-			document.getElementById("tishi").innerHTML = "<font color='red'>两次密码不相同</font>";
-			document.getElementById("submit").disabled = true;
-		}
+function validate() {
+var pw1 = document.getElementById("pw1").value;
+var pw2 = document.getElementById("pw2").value;
+	if(pw1 == pw2) {
+	document.getElementById("tishi").innerHTML="<font color='green'>两次密码相同</font>";
+	document.getElementById("submit").disabled = false;
 	}
-	$("#submit").click(function() {
-		var name = document.getElementById("name").value;
-		var pw1 = document.getElementById("pw1").value;
-		var pw2 = document.getElementById("pw2").value;
-		if (name == "") {
-			document.getElementById("tishi1").innerHTML = "<font color='red'>请输入用户名</font>";
-			document.getElementById("submit").style.backgroundColor = "#C0C0C0";
-		}
-		if (pw1 == "") {
-			document.getElementById("tishi2").innerHTML = "<font color='red'>请输入密码</font>";
-			document.getElementById("submit").style.backgroundColor = "#C0C0C0";
-		}
-		if (pw2 == "") {
-			document.getElementById("tishi3").innerHTML = "<font color='red'>请确认密码</font>";
-			document.getElementById("submit").style.backgroundColor = "#C0C0C0";
-		}
-		if ((name != "") && (pw1 != "") && (pw2 != "")) {
+	else {
+	document.getElementById("tishi").innerHTML="<font color='red'>两次密码不相同</font>";
+	document.getElementById("submit").disabled = true;
+	}
+}
+$("#submit").click(function(){
+	var name = document.getElementById("name").value;
+	var pw1 = document.getElementById("pw1").value;
+	var pw2 = document.getElementById("pw2").value;
+	var key = document.getElementById("key").value;
+	if( name == ""){
+	document.getElementById("tishi1").innerHTML="<font color='red'>请输入用户名</font>";
+	document.getElementById("submit").style.backgroundColor = "#C0C0C0";	
+	}
+	if(!isUserID(name)){document.getElementById("tishi1").innerHTML="<font color='red'>用户名称不合法</font>";}
+	if(!isPassword(pw1)){document.getElementById("tishi2").innerHTML="<font color='red'>密码格式错误</font>";}
+	if( pw1 == ""){
+	document.getElementById("tishi2").innerHTML="<font color='red'>请输入密码</font>";
+	document.getElementById("submit").style.backgroundColor = "#C0C0C0";		
+	}
+	if( key != "123456"){
+	document.getElementById("tishi4").innerHTML="<font color='red'>注册码不正确</font>";
+	document.getElementById("submit").style.backgroundColor = "#C0C0C0";		
+	}
+	if( pw2 == ""){
+	document.getElementById("tishi3").innerHTML="<font color='red'>请确认密码</font>";
+	document.getElementById("submit").style.backgroundColor = "#C0C0C0";
+		if ((name != "") && (pw1 != "") && (pw2 != "")&&(key == "123456")) {
 			var pw = $('input[id="pw1"]').val();
 			var name = $('input[name="name"]').val()
 			var rider = {
@@ -113,14 +133,13 @@
 						}
 						if (state == 311) {
 							alert("注册失败，骑手已存在！")
-						}
+							}	
+		                }
 					}
-				}
-			)
-			
-		}
+				)
 	}
-	)
+	}
+})
 </script>
 
 </html>

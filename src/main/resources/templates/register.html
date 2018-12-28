@@ -1,116 +1,69 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="utf-8" />
-<title>会员注册</title>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
-<!-- Mobile Devices Support @begin -->
-<meta content="application/xhtml+xml;charset=UTF-8" http-equiv="Content-Type">
-<meta content="no-cache,must-revalidate" http-equiv="Cache-Control">
-<meta content="no-cache" http-equiv="pragma">
-<meta content="0" http-equiv="expires">
-<meta content="telephone=no, address=no" name="format-detection">
-<meta content="width=device-width, initial-scale=1.0" name="viewport">
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<!-- apple devices fullscreen -->
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<!-- Mobile Devices Support @end -->
-<link rel="stylesheet" type="text/css" href="FortAwesome/docs/assets/css/font-awesome.css">
-<link rel="stylesheet" type="text/css" href="style.css" />
-<script src="js/jquery.js"></script> 
-<script src="js/bootstrap.min.js"></script> 
-<script type="text/javascript" src="js/swipe.js"></script>
-<script src="js/jquery.js"></script> 
-<script src="js/bootstrap.min.js"></script>  
-
-<script type="text/javascript">
-   var _global = {};
-	   _global.spm = {};
-	   
-document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {WeixinJSBridge.call('hideToolbar');});
-</script>
-<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){	
-$(".dci").click( function () { 
-$(this).toggleClass("selected");
- }); 
-});
-</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width" />
+<meta name="viewport" content="initial-scale=1.0,user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link type="text/css" href="css/style.css" rel="stylesheet" />
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/swipe.js"></script>
+		<script src="js/jquery.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<title>注册</title>
 </head>
 
 <body>
-<div class="body login-bg">
-    <p class="login-logo"><img src="images/logo.png" alt="logo"></p>
-    <h2 class="login-tit">会员注册</h2>
-    <div class="login-div">
-      <form>
-        <p class="clearfix"><span class="floatl">帐号：</span><em class="floatr">
-          <input type="text" class="ltxt floatl" name="name" id="name" onkeydown="tipclear()"><span id="tishi1"></span>
-          </em></p>
-        <p class="clearfix"><span class="floatl">密码：</span><em class="floatr">
-          <input  type="password" name="pw" id="pw1" class="ltxt floatl" onkeydown="tipclear()"><span id="tishi2"></span>
-          </em></p>
-          <p class="clearfix"><span class="floatl">确认密码：</span><em class="floatr">
-          <input type="password" class="ltxt floatl"  name="pw" id="pw2" onkeydown="tipclear()" onkeyup="validate()"><span id="tishi3"></span><span id="tishi"></span>
-          </em><span id="state"></span></p>
-        <p class="clearfix lbtn">
-          <input type="button" id="submit" name="submit" class="orange-btn floatl lbtn-dl" value="确认">
-          <a href="login.html" class="floatr red-btn">已注册？登录</a></p>
-      </form>
-    </div>
- 
-    <!--下导航-->
-<div class="js-navmenu nav-on-bottom style-2">
-    <div class="nav-menu has-menu-3"> <a href="index.html" class="icon-home"></a>
-      <div class="divide">&nbsp;</div>
-      <div class="one"> <a class="mainmenu js-mainmenu" href="javascript:void(0);"> <i class="arrow-weixin"></i> 菜品 </a>
-        <div class="submenu js-submenu"> <span class="arrow before-arrow"></span> <span class="arrow after-arrow"></span>
-          <ul>
-            <li> <a href="foodlist.html"> 火锅 </a> </li>
-            <li> <a href="foodlist.html"> 地方菜 </a> </li>
-            <li> <a href="foodlist.html"> 西餐 </a> </li>
-            <li> <a href="foodlist.html"> 快餐 </a> </li>
-          </ul>
-        </div>
-      </div>
-      <div class="divide">&nbsp;</div>
-      <div class="one"> <a class="mainmenu js-mainmenu" href="javascript:void(0);"> <i class="arrow-weixin"></i> 会员 </a>
-        <div class="submenu js-submenu"> <span class="arrow before-arrow"></span> <span class="arrow after-arrow"></span>
-          <ul>
-            <li> <a href="foodlist.html"> 我要会员 </a> </li>
-            <li> <a href="membercenter.html"> 会员中心 </a> </li>
-          </ul>
-        </div>
-      </div>
-      <div class="divide">&nbsp;</div>
-      <div class="one"> <a class="mainmenu js-mainmenu" href="javascript:void(0);"> <i class="arrow-weixin"></i> VIP </a>
-        <div class="submenu js-submenu"> <span class="arrow before-arrow"></span> <span class="arrow after-arrow"></span>
-          <ul>
-            <li> <a href="register.html"> 我要成为VIP </a> </li>
-            <li> <a href="score.html"> 积分兑换 </a> </li>
-          </ul>
-        </div>
-      </div>
-      <div class="divide">&nbsp;</div>
-      <div class="one"> <a class="mainmenu js-mainmenu" href="javascript:void(0);"> <i class="arrow-weixin"></i> 订单 </a>
-        <div class="submenu js-submenu"> <span class="arrow before-arrow"></span> <span class="arrow after-arrow"></span>
-          <ul>
-            <li> <a href="order.html"> 会员订单 </a> </li>
-          </ul>
-        </div>
-        <!--submenu js-submenu--> 
-      </div>
-      <!--one--> 
-    </div>
-  </div>
-
-  <!--nav-on-bottom下导航结束-->
-</div>
-<!--body--> 
+	<div class="login">
+		<div class="logo"></div>
+		<div class="main">
+			<form>
+				<table width="100%" border="0" cellspacing="0" class="main1">
+					<tr>
+						<td class="text"><input type="text/css" class="text1"
+							id="name" name="name" onkeydown="tipclear()" placeholder="输入户名，可包含中英文与下划线" /><span
+							id="tishi1"></span></td>
+					</tr>
+				</table>
+				<div class="linee"></div>
+				<table width="100%" border="0" cellspacing="0" class="main1">
+					<tr>
+						<td class="text"><input type="password" class="text1"
+							id="pw1" onkeydown="tipclear()" placeholder="输入6-12位密码" /><span
+							id="tishi2"></span></td>
+					</tr>
+				</table>
+				<div class="linee"></div>
+				<table width="100%" border="0" cellspacing="0" class="main1">
+					<tr>
+						<td class="text"><input type="password" class="text1"
+							id="pw2" onkeydown="tipclear()" onkeyup="validate()"
+							placeholder="输入确认密码" /><span id="tishi3"></span><span id="tishi"></span></td>
+					</tr>
+				</table>
+				<div class="linee"></div>
+		</div>
+		<div class="button">
+			<input type="button" id="submit" name="submit" value="注 册"
+				class="text2" />
+		</div>
+	</div>
+	<div class="footrt">
+		<div class="footrt_left">
+			<a href="login.html">已有账号？立即登录</a>
+		</div>
+	</div>
+	</form>
 <script type="text/javascript" src="js/wap.min.js"></script>
 <script type="text/javascript">
+function isUserID(str) {
+        return /^[\u4E00-\u9FA5a-zA-Z0-9_]{1,12}$/.test($.trim(str));
+    }
+function isPassword (str) {
+        return  /^[^\u4e00-\u9fa5\s]{6,12}$/.test($.trim(str));
+    }
 function tipclear(){
 	document.getElementById("tishi1").innerHTML="";
 	document.getElementById("tishi2").innerHTML="";
@@ -136,6 +89,8 @@ $("#submit").click(function(){
 	document.getElementById("tishi1").innerHTML="<font color='red'>请输入用户名</font>";
 	document.getElementById("submit").style.backgroundColor = "#C0C0C0";	
 	}
+	if(!isUserID(name)){document.getElementById("tishi1").innerHTML="<font color='red'>用户名称不合法</font>";}
+	if(!isPassword(pw1)){document.getElementById("tishi2").innerHTML="<font color='red'>密码格式错误</font>";}
 	if( pw1 == ""){
 	document.getElementById("tishi2").innerHTML="<font color='red'>请输入密码</font>";
 	document.getElementById("submit").style.backgroundColor = "#C0C0C0";		
@@ -160,6 +115,7 @@ $("#submit").click(function(){
 							//var state = result.state;
 							if(statusCode==300){
 								alert("注册成功");
+								window.location.href="login.html";
 							}	
 							if(statusCode==301){
 								alert("注册失败，用户名已存在！");
@@ -167,7 +123,6 @@ $("#submit").click(function(){
 		                }
 					}
 				)
-	//window.location.href="login.html";
 	}
 	}
 )

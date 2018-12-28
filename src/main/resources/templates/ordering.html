@@ -16,23 +16,27 @@
 <!-- apple devices fullscreen -->
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <!-- Mobile Devices Support @end -->
-<link rel="stylesheet" type="text/css" href="FortAwesome/docs/assets/css/font-awesome.css">
 <link rel="stylesheet" type="text/css" href="style.css" />
 <link rel="stylesheet" href="css/bellows.css">
 <link rel="stylesheet" href="css/bellows-theme.css">
 <link rel="stylesheet" href="css/lrtk.css">
+<link href="css/font-awesome.css" rel="stylesheet" />
+<link href="css/buttons.css" rel="stylesheet" /> 
 <script src="js/jquery.js"></script> 
 <script src="js/bootstrap.min.js"></script> 
 <script type="text/javascript" src="js/swipe.js"></script>
 <script src="js/jquery.js"></script> 
 <script src="js/bootstrap.min.js"></script> 
 <script type="text/javascript">
+   var _global = {};
+	   _global.spm = {};
 
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {WeixinJSBridge.call('hideToolbar');});
 </script>
 <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
 </head>
 
-<body>
+<body onload="load()">
 <div class="body">
 	<h3 class="fn-tit"><a href="javascript:history.go(-1);" class="nback">返回</a><b class="tit">我的订单</b></h3>
 	<div class="bellows single" id="orderlist">
@@ -100,6 +104,13 @@ if(!user_state){
 var Custname =sessionStorage.getItem("user_name");
 data={"Custname":Custname};
 var iG = iG||[];
+ /*iG=[
+           {id:"1",orderdetailid:"1",address:"杭电",sellername:"金拱门",orderprice:"23",ordertate:"0",time:"2018/12/9 22:04:20"}
+                    ,
+			{id:"2",orderdetailid:"1",address:"杭电",sellername:"肯德基",orderprice:"23",ordertate:"1",time:"2018/12/9 22:04:20"}
+                    ,
+			{id:"3",orderdetailid:"1",address:"杭电",sellername:"麦当劳",orderprice:"23",ordertate:"1",time:"2018/12/9 22:04:20"}
+			];*/
 			
 			$.ajax(
 					{
@@ -108,18 +119,18 @@ var iG = iG||[];
 						url:"getorder",
 						data:{"data":JSON.stringify(data)},
 		                success:function(result){	
-						iG = result;
-						$("#orderlist").html(listManger(iG));
-						$('.bellows').bellows({
-							singleItemOpen: true,
-							easing: 'ease-in-out',
-							duration: 60
-						})
+							iG = result;
+							$("#orderlist").html(listManger(iG));
+							$('.bellows').bellows({
+								singleItemOpen: true,
+								easing: 'ease-in-out',
+								duration: 60
+							})
 		                }
 					}
 
 			)
-			
+
 			
 })		
 	
@@ -128,9 +139,14 @@ function listManger(_list){
 	for(var i in _list){
 		result += "<div class=\"bellows__item\"><div class=\"bellows__header\" onClick=\"listdata("+_list[i].orderid+")\" ><h3><span id=\"left\">"+_list[i].sellername+"</span>";
 		result += "<span id=\"left\">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+_list[i].time+"</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-		if(_list[i].orderstate==601){
+		if(_list[i].orderstate == 601){
 			result += "状态：<span style=\"color:green\">已送达</span>"
-			}else{
+			}
+			else if((_list[i].orderstate == 602)){
+			result += "状态：<span style=\"color:grey\">已取消</span>"
+			}
+			
+			else{
 				result += "状态：<span style=\"color:red\">配送中</span>"
 				}
 		result += "</h3></div>";
@@ -158,13 +174,39 @@ function listdata(id){
 		result += "<ul class=\"foodlist\"><div id=\"J_list_Container\"><div class=\"foodintro clearfix\"><div class=\"foodcon floatl\"><p>订单编号:<b>"+data.orderid+"</b></p><p>顾客姓名：<b>"+data.custname+"</b></p><p>总价：<b>"+data.orderfoodpri+"</b></p><p>配送员：<b>"+data.orderid+"</b></p></div></div></ul>";
 		var foods = $.parseJSON(data.foods);
 		for(var i in foods){
-			result += "<ul class=\"foodlist\"><div id=\"J_list_Container\"><div class=\"foodintro clearfix\"><img src=\""+foods[i].imageUrl+"\" class =\"imge\"><div class=\"foodcon floatl\"><p>"+foods[i].name+"</p><p>单价：<b>"+foods[i].price+"</b></p><p>数量：<b>"+foods[i].counter+"</b></p></div></div></div></ul>";
+			result += "<ul class=\"foodlist\"><div id=\"J_list_Container\"><div class=\"foodintro clearfix\"><img src=\""+foods[i].imageUrl+"\" class =\"imge\" style=\"width:100px;height:80px\"><div class=\"foodcon floatl\"><p>"+foods[i].name+"</p><p>单价：<b>"+foods[i].price+"</b></p><p>数量：<b>"+foods[i].counter+"</b></p></div></div></div></ul>";
 			}
+			
+			result += "<button class=\"button button-rounded button-flat-action fr mgtbr8\" id=\"ordercancel\" onClick=\"ordercancel("+data.orderid+")\" >取消订单</button>";
+			
 		$("div[name='listdata']").html(result);
 		                }
 					}
 				)
+				
 	}
+
+function ordercancel(id){
+	var _data={"orderid":id};
+	$.ajax(
+					{
+						type:"post",
+						dataType:"json",
+						url:"ordercancel",
+						data:{"data":JSON.stringify(_data)},
+		                success:function(result){
+		          
+							if(result.statusCode==602){
+								alert("取消成功")
+								}
+							if(result.statusCode==603){
+								alert("取消失败")
+							}
+		                }
+					}
+				)
+}	
+
 </script>
 <script type="text/javascript" src="js/wap.min.js"></script>
 <script src="js/velocity.min.js"></script>

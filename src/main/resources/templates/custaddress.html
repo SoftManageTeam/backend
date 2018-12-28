@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="utf-8" />
-<title>会员中心</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>收货地址</title>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
 <!-- Mobile Devices Support @begin -->
@@ -18,7 +18,6 @@
 <!-- Mobile Devices Support @end -->
 <link rel="stylesheet" type="text/css" href="FortAwesome/docs/assets/css/font-awesome.css">
 <link rel="stylesheet" type="text/css" href="style.css" />
- <link href="css/font-awesome.css" rel="stylesheet" />
 <script type="text/javascript">
    var _global = {};
 	   _global.spm = {};
@@ -37,43 +36,50 @@ $(".dci").click( function () {
 $(this).toggleClass("selected");
  }); 
 });
+$(function() {
+	sessionStorage.setItem("address_state",-1);
+	sessionStorage.setItem("address_data","");
+	/* var data=[
+					{addressid:"1",address1:"浙江省杭州市江干区",address2:"杭州电子科技大学",custname:"王小二",phone:"123456789",addrank:"1"}
+		                   ,
+					{addressid:"2",address1:"浙江省杭州市江干区",address2:"杭州电子科技大学",custname:"王小二",phone:"123456789",addrank:"0"}
+								   ,
+					{addressid:"3",address1:"浙江省杭州市江干区",address2:"杭州电子科技大学",custname:"王小二",phone:"123456789",addrank:"0"}
+					];*/
+	var data=JSON.parse(sessionStorage.setItem("user_address"));
+	iG =data;
+	$("#address").html(listManger(iG));
+})
+function listManger(_list) {
+		var result = "";
+		result += "<dl class=\"mem-orderlist mem\"><dt><span class=\"fn-tit\" style=\"white-space:pre;\">收货地址</span></dt>";
+		for (var i = 0; i < _list.length; i++) {
+			result += "<dd style=\"font-size:16px\"><p><a onclick=\"address("+i+")\"  class=\"clearfix\"><span class=\"floatl\"><span  style=\"font-weight:bold\">"+_list[i].address1+"</span></br>"+_list[i].address2+"</br><span style=\"font-size:14px;color: #999; margin-top:5px; display:inline-block\">"+_list[i].custname+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+_list[i].phone+"</span></span><em class=\"floatr\" style=\"margin-top:5%;margin-right:2%\">&nbsp;&nbsp;&nbsp;&nbsp;<i class=\"icon-pencil\"></i></br>"
+			if (_list[i].addrank == 1) {
+				result += "<span style=\"color:red;font-size:10px\">默认地址</span>"
+			}
+			result+= "</em></a></p>";
+		}
+		return result;
+	}
+function address(i){
+	sessionStorage.setItem("address_data",JSON.stringify(iG[i]));
+	sessionStorage.setItem("address_state",1);
+	window.location.href = "addaddress.html";
+	}
 </script>
 </head>
 
 <body>
 <div class="body">
-  <div class="mem-top clearfix">
-  	<em class="floatl mem-img"><img src="images/memimg.jpg" width="100%" alt="头像"></em>
-    <div class="mem-intro floatr">
-    	<p><b><span id="name"></span></b></p>
-        <p>账户余额：<strong><span id="money">0元</span></strong></p>
-        <p><a href="card.html">会员VIP会员卡</a>，我还不是VIP，<br /><a href="register.html">申请成为VIP</a></p>
-    </div><!--mem-intro-->    
-  </div><!--mem-top-->
-  <dl class="mem-orderlist mem">
-  	<dt>订单</dt>
-    <dd>
-    	<p><a href="ordering.html" class="clearfix"><span class="floatl"><i class="icon-pencil"></i>我的订单</span><em class="floatr">0<i class="icon-chevron-right"></i></em></a></p>
-        <p><a href="yichengjiao.html" class="clearfix"><span class="floatl"><i class="icon-check"></i>已成交</span><em class="floatr">0<i class="icon-chevron-right"></i></em></a></p>
-        <p><a href="weichengjiao.html" class="clearfix"><span class="floatl"><i class="icon-check-empty"></i>未成交</span><em class="floatr">0<i class="icon-chevron-right"></i></em></a></p>
-    </dd>
-  </dl>
-  <dl class="mem-score mem">
-  	<dt>会员积分</dt>
-    <dd>
-    	<p><a href="jifenlieb.html" class="clearfix"><span class="floatl"><i class="icon-money"></i>现有积分：<b class="orange">912</b></span><em class="floatr">积分记录<i class="icon-chevron-right"></i></em></a></p>
-        <p><a href="jifenhuodong.html" class="clearfix"><span class="floatl"><i class="icon-gift"></i>积分活动</span><em class="floatr"><i class="icon-chevron-right"></i></em></a></p>
-        <p><a href="jifenguize.html" class="clearfix"><span class="floatl"><i class="icon-book"></i>积分规则</span><em class="floatr"><i class="icon-chevron-right"></i></em></a></p>
-    </dd>
-  </dl>
-  <dl class="mem-set mem">
-  	<dt>账户设置</dt>
-    <dd>
-    	<p><a href="custaddress.html" class="clearfix"><span class="floatl"><i class="icon-user"></i>地址管理</span><em class="floatr"><i class="icon-chevron-right"></i></em></a></p>
-        <p><a href="xiugaimima.html" class="clearfix"><span class="floatl"><i class="icon-edit"></i>修改密码</span><em class="floatr"><i class="icon-chevron-right"></i></em></a></p>        
-    </dd>
-  </dl>
-  <!--下导航-->
+<h3  class="fn-tit"><a href="javascript:history.go(-1);" class="nback">返回</a></h3>
+	<div id ="address">
+	</div>
+    <div class="sub1">
+    <a style="color:#FFF" href="addaddress.html">新增地址</a></span>
+    </div>
+</div>
+<!--下导航-->
   <div class="js-navmenu nav-on-bottom style-2">
     <div class="nav-menu has-menu-3"> <a href="index.html" class="icon-home"></a>
       <div class="divide">&nbsp;</div>
@@ -118,15 +124,6 @@ $(this).toggleClass("selected");
     </div>
   </div>
   <!--nav-on-bottom下导航结束--> 
-</div>
-<!--body--> 
-
-<script type="text/javascript" src="js/wap.min.js"></script>
-<script>
-var money = sessionStorage.getItem("user_money");
-var name = sessionStorage.getItem("user_name");
-$("#name").html(name);
-$("#money").html(money);
-</script>
+  <script type="text/javascript" src="js/wap.min.js"></script>
 </body>
 </html>

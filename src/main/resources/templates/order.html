@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="css/bellows.css">
 <link rel="stylesheet" href="css/bellows-theme.css">
 <link rel="stylesheet" href="css/lrtk.css">
+ <link href="css/font-awesome.css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="FortAwesome/docs/assets/css/font-awesome.css">
 <link rel="stylesheet" type="text/css" href="style.css" />
 <link rel="stylesheet" href="css/bellows.css">
@@ -26,6 +27,11 @@
 <script src="js/jquery.js"></script> 
 <script src="js/bootstrap.min.js"></script> 
 <script type="text/javascript">
+var user_state =sessionStorage.getItem("user_state");
+		if(!user_state){
+			alert("未登录，请先登录");
+			window.location.href="login.html";
+		}
    var _global = {};
 	   _global.spm = {};
 
@@ -64,7 +70,27 @@ document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {Weixi
     </div> 
    </section> 
   </div>
-  
+  <script>
+
+ var custorder =sessionStorage.getItem("custorder");
+	order = JSON.parse(custorder);
+data = {
+		orderid:order.order_id,
+		sellername:order.shopName,
+		custname : order.f_name,
+		phone:  order.phone,
+		price: order.totalPrice,
+		orderfoodpri :order.order_id,
+		foods:JSON.parse(JSON.stringify(order.food))
+}
+var result = "";
+		result += "<ul class=\"foodlist\"><div id=\"J_list_Container\"><div class=\"foodintro clearfix\"><div class=\"foodcon floatl\"><p>订单状态:<b>下单成功</b></p><p>顾客姓名：<b>"+data.custname+"</b></p><p>商家：<b>"+data.sellername+"</b></p><p>顾客电话：<b>"+data.phone+"</b></p></div></div></ul>";
+		for(var i in data.foods){
+			result += "<ul class=\"foodlist\"><div id=\"J_list_Container\"><div class=\"foodintro clearfix\"><img src=\""+data.foods[i].imageUrl+"\" class =\"imge\" style=\"width:100px; height:100px\"><div class=\"foodcon floatl\"><p>"+data.foods[i].name+"</p><p>单价：<b>"+data.foods[i].price+"</b></p><p>数量：<b>"+data.foods[i].counter+"</b></p></div></div></div></ul>"
+			}
+		result += "<ul class=\"foodlist\"><div id=\"J_list_Container\"><div class=\"foodintro clearfix\"><div class=\"foodcon floatl\"><p style=\"margin-left:60%\"><h3>总价：<b>"+data.price+"元</h3></b></p></div></div></ul>";
+		$("div[name='listdata']").html(result);
+ </script>
     <!--下导航-->
   <div class="js-navmenu nav-on-bottom style-2">
     <div class="nav-menu has-menu-3"> <a href="index.html" class="icon-home"></a>
@@ -112,30 +138,5 @@ document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {Weixi
   <!--nav-on-bottom下导航结束-->   
 
  <script type="text/javascript" src="js/wap.min.js"></script>
-<script src="js/velocity.min.js"></script>
-<script src="js/bellows.min.js"></script>
- <script>
-
- var custorder =sessionStorage.getItem("custorder");
-	order = JSON.parse(custorder);
-data = {
-		orderid:order.order_id,
-		sellername:order.shopName,
-		custname : order.name,
-		price: order.totalPrice,
-		orderfoodpri :order.order_id,
-		foods:JSON.parse(JSON.stringify(order.food))
-}
-var result = "";
-		result += "<ul class=\"foodlist\"><div id=\"J_list_Container\"><div class=\"foodintro clearfix\"><div class=\"foodcon floatl\"><p>订单编号:<b>"+data.orderid+"</b></p><p>顾客姓名：<b>"+data.custname+"</b></p><p>商家：<b>"+data.sellername+"</b></p><p>配送员：<b>待分配</b></p></div></div></ul>";
-		for(var i in data.foods){
-			result += "<ul class=\"foodlist\"><div id=\"J_list_Container\"><div class=\"foodintro clearfix\"><img src=\""+data.foods[i].imageUrl+"\" class =\"imge\" style=\"width:30%; height:30%\"><div class=\"foodcon floatl\"><p>"+data.foods[i].name+"</p><p>单价：<b>"+data.foods[i].price+"</b></p><p>数量：<b>"+data.foods[i].counter+"</b></p></div></div></div></ul>"
-			}
-		result += "<ul class=\"foodlist\"><div id=\"J_list_Container\"><div class=\"foodintro clearfix\"><div class=\"foodcon floatl\"><p style=\"margin-left:60%\"><h3>总价：<b>"+data.price+"元</h3></b></p></div></div></ul>";
-		$("div[name='listdata']").html(result);
- </script>
- <script type="text/javascript" src="js/wap.min.js"></script>
-<script src="js/velocity.min.js"></script>
-<script src="js/bellows.min.js"></script>
  </body>
 </html>

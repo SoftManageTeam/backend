@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<link type="text/css" href="css/style.css" rel="stylesheet" />
+		 <link href="css/font-awesome.css" rel="stylesheet" />
 		<script src="js/jquery.js"></script>
 		<script src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
@@ -49,8 +50,6 @@
 	<div class="kb"></div>
 </body>
 <script>
-
-	var iG = iG||{};
 	$(function() {
 		/* var data=[
 		          {orderid:"1",orderdetailid:"1",address:"杭电",sellername:"金拱门",orderprice:"23",orderstate:"601",custname:"王小二",time:"2018/12/9 22:04:20"}
@@ -84,10 +83,14 @@
 		var x = 1;
 		for (var i = 0; i < _list.length; i++) {
 			result += "<div class=\"bbb\"><a onClick=\"listdata(" + _list[i].orderid + ")\"><table width=\"95%\" border=\"0\" cellpadding=\"0\"><tr><td rowspan=\"2\"></td><td rowspan=\"2\" class=\"shop_pic\"><img src=\"img/cp.jpg\" width=\"100%\" height=\"auto\"/></td><td class=\"ddd\">" + _list[i].sellername + "</td><td><img src=\"img/bd.png\" width=\"65%\" height=\"65%\" style=\"margin-top:10%\" /></td></tr><tr><td class=\"ddd\">点击查看详情</td></tr></table></a><table width=\"95%\" border=\"0\" cellpadding=\"0\" class=\"shop_text\"><tr><td class=\"d3\">客户地址：" + _list[i].address + " </td><td class=\"d3\">客户姓名：" + _list[i].custname + "</td></tr></table>"
-			if (_list[i].orderstate != 601) {
-				result += "<table width=\"100%\" border=\"0\" cellpadding=\"0\"><tr><td class=\"d2\"><input type=\"submit\" value=\"送达\" onClick=\"finish(" + _list[i].orderid + ")\" class=\"jsjs\" /></td></tr></table></div>"
-			} else {
+			if (_list[i].orderstate == 601) {
 				result += "<table width=\"100%\" border=\"0\" cellpadding=\"0\"><tr><td class=\"d2\"><input type=\"submit\"  disabled=\"disabled\" value=\"已完成\" onClick=\"finish(" + _list[i].orderid + ")\" class=\"jsjs_f\" /></td></tr></table></div>"
+			} 
+			else if(_list[i].orderstate == 602){
+			result += "<table width=\"100%\" border=\"0\" cellpadding=\"0\"><tr><td class=\"d2\"><input type=\"submit\"  disabled=\"disabled\" value=\"已取消\" onClick=\"finish(" + _list[i].orderid + ")\" class=\"jsjs_f\" /></td></tr></table></div>"
+			}
+			else {
+				result += "<table width=\"100%\" border=\"0\" cellpadding=\"0\"><tr><td class=\"d2\"><input type=\"submit\" value=\"送达\" onClick=\"finish(" + _list[i].orderid + ")\" class=\"jsjs\" /></td></tr></table></div>"
 			}
 		}
 		return result;

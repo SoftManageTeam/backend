@@ -42,7 +42,7 @@ public class riderController {
 	@RequestMapping("/riderindex.html")
 	public String riderindexHtml(HashMap<String, Object> map) {
 		// map.put("hello", "欢迎进入HTML页面");
-		return "/riderindex.html";
+		return "riderindex.html";
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public class riderController {
 	 */
 	@RequestMapping("/riderlogin.html")
 	public String riderloginHtml(HashMap<String, Object> map) {
-		return "/riderlogin.html";
+		return "riderlogin.html";
 	}
 	
 	/**
@@ -64,7 +64,7 @@ public class riderController {
 	 */
 	@RequestMapping("/riderregister.html")
 	public String riderregisterHtml(HashMap<String, Object> map) {
-		return "/riderregister.html";
+		return "riderregister.html";
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public class riderController {
 	 */
 	@RequestMapping("/member.html")
 	public String memberHtml(HashMap<String, Object> map) {
-		return "/member.html";
+		return "member.html";
 	}
 	
 	/**
@@ -86,7 +86,7 @@ public class riderController {
 	 */
 	@RequestMapping("/shopping.html")
 	public String shoppingHtml(HashMap<String, Object> map) {
-		return "/shopping.html";
+		return "shopping.html";
 	}
 	
 	
@@ -98,7 +98,18 @@ public class riderController {
 	 */
 	@RequestMapping("/product.html")
 	public String productHtml(HashMap<String, Object> map) {
-		return "/product.html";
+		return "product.html";
+	}
+	
+	/**
+	 * language跳转到language.html
+	 * 
+	 * @param map
+	 * @return
+	 */
+	@RequestMapping("/language.html")
+	public String languageHtml(HashMap<String, Object> map) {
+		return "language.html";
 	}
 	
 	/**
