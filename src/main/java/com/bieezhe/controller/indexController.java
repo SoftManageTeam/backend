@@ -145,6 +145,16 @@ public class indexController {
 	public String membercenterHtml() {
 		return "membercenter.html";
 	}
+	
+	/**
+	 * welcome.html请求跳转到welcome.html
+	 * 
+	 * @return
+	 */
+	@GetMapping("/welcome.html")
+	public String welcomeHtml() {
+		return "welcome.html";
+	}
 
 	/**
 	 * 用户登录

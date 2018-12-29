@@ -53,7 +53,7 @@
 				<div class="linee"></div>
 		</div>
 		<div class="button">
-			<input type="button" id="submit" name="submit" value="注 册"
+			<input type="button" id="addRider" name="addRider" value="注 册"
 				class="text2" />
 		</div>
 	</div>
@@ -88,11 +88,12 @@ var pw2 = document.getElementById("pw2").value;
 	document.getElementById("submit").disabled = true;
 	}
 }
-$("#submit").click(function(){
+$("#addRider").click(function(){
 	var name = document.getElementById("name").value;
 	var pw1 = document.getElementById("pw1").value;
 	var pw2 = document.getElementById("pw2").value;
 	var key = document.getElementById("key").value;
+
 	if( name == ""){
 	document.getElementById("tishi1").innerHTML="<font color='red'>请输入用户名</font>";
 	document.getElementById("submit").style.backgroundColor = "#C0C0C0";	
@@ -107,38 +108,40 @@ $("#submit").click(function(){
 	document.getElementById("tishi4").innerHTML="<font color='red'>注册码不正确</font>";
 	document.getElementById("submit").style.backgroundColor = "#C0C0C0";		
 	}
+
 	if( pw2 == ""){
 	document.getElementById("tishi3").innerHTML="<font color='red'>请确认密码</font>";
 	document.getElementById("submit").style.backgroundColor = "#C0C0C0";
-		if ((name != "") && (pw1 != "") && (pw2 != "")&&(key == "123456")) {
-			var pw = $('input[id="pw1"]').val();
-			var name = $('input[name="name"]').val()
-			var rider = {
-				"name" : name,
-				"password" : pw
-			};
-			$.ajax(
-				{
-					type : "post",
-					dataType : "json",
-					url : "postrider",
-					data : {
-						"rider" : JSON.stringify(rider)
-					},
-					success : function(state) {
+	}
+	if ((name != "") && (pw1 != "") && (pw2 != "")&&(key == "123456")) {
+		var pw = $('input[id="pw1"]').val();
+		var name = $('input[id="name"]').val()
+		var rider = {
+			"name" : name,
+			"password" : pw
+		};
 
-						if (state == 310) {
-							alert("注册成功");
-							window.location.href = "riderlogin.html";
-						}
-						if (state == 311) {
-							alert("注册失败，骑手已存在！")
-							}	
-		                }
+		$.ajax(
+			{
+				type : "post",
+				dataType : "json",
+				url : "postrider",
+				data : {
+					"rider" : JSON.stringify(rider)
+				},
+				success:function(state) {
+					if (state == 310) {
+						alert("注册成功");
+						window.location.href = "riderlogin.html";
 					}
-				)
-	}
-	}
+					if (state == 311) {
+						alert("注册失败，骑手已存在！");
+						}	
+	                }
+				}
+			)
+}
+	
 })
 </script>
 
